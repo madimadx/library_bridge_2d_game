@@ -5,7 +5,7 @@
 class World {
 public:
   World(const std::string& name, int fact);
-  // ~World() { } // The image will be deleted by the FrameFactory
+  //~World() { } // The image will be deleted by the FrameFactory
   void update();
   void draw() const;
 private:

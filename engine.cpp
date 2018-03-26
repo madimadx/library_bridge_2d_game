@@ -21,7 +21,9 @@ Engine::Engine() :
   io( IoMod::getInstance() ),
   clock( Clock::getInstance() ),
   renderer( rc->getRenderer() ),
-  world("back", Gamedata::getInstance().getXmlInt("back/factor") ),
+  bricks("back", Gamedata::getInstance().getXmlInt("back/factor") ),
+  world("middle", Gamedata::getInstance().getXmlInt("middle/factor") ),
+  clouds("top", Gamedata::getInstance().getXmlInt("top/factor") ),
   viewport( Viewport::getInstance() ),
   star(new Sprite("YellowStar")),
   spinningStar(new MultiSprite("SpinningStar")),
@@ -34,10 +36,13 @@ Engine::Engine() :
 }
 
 void Engine::draw() const {
+  bricks.draw();
   world.draw();
 
   star->draw();
   spinningStar->draw();
+
+  clouds.draw();
 
   viewport.draw();
   viewport.drawFPS(clock.getFps());
@@ -45,9 +50,13 @@ void Engine::draw() const {
 }
 
 void Engine::update(Uint32 ticks) {
+  bricks.update();
+  world.update();
+
   star->update(ticks);
   spinningStar->update(ticks);
-  world.update();
+
+  clouds.update();
   viewport.drawFPS(clock.getFps());
   viewport.update(); // always update viewport last
 }

@@ -18,15 +18,27 @@
 </view>
 
 <world>
-  <width>740</width>
-  <height>2000</height>
+  <width>480</width>
+  <height>4000</height>
 </world>
 
 <back>
-  <file>assets/nebula.png</file>
-  <factor>1</factor>
-  <transparency>false</transparency>
+  <file>assets/vert_brick.png</file>
+  <factor>3</factor>
+  <transparency>true</transparency>
 </back>
+
+<middle>
+  <file>assets/vert_bridge.png</file>
+  <factor>5</factor>
+  <transparency>true</transparency>
+</middle>
+
+<top>
+  <file>assets/vert_clouds.png</file>
+  <factor>1</factor>
+  <transparency>true</transparency>
+</top>
 
 <font name="font">
   <file>fonts/arial.ttf</file>
