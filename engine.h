@@ -33,7 +33,7 @@ private:
   void draw() const;
   void update(Uint32);
 
-  Engine(const Engine&);
+  Engine(const Engine&) = delete;
   Engine& operator=(const Engine&);
   void printScales() const;
   void checkForCollisions();

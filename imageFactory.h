@@ -34,6 +34,6 @@ private:
     multiTextures(),
     multiImages()
   {}
-  ImageFactory(const ImageFactory&);
+  ImageFactory(const ImageFactory&) = delete;
   ImageFactory& operator=(const ImageFactory&);
 };
