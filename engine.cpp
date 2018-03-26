@@ -38,10 +38,10 @@ Engine::Engine() :
   makeVideo( false )
 {
   srand(time(NULL));
-  sprites.emplace_back(new Sprite("YellowStar"));
+  sprites.emplace_back(new Sprite("RunningMan"));
   sprites.emplace_back(new MultiSprite2way("RunningMan2way"));
   for (int i = 0; i < 5; i++) {
-    sprites.emplace_back(new MultiSprite("SpinningStar", float(rand()%350), float(rand()%400)));
+    sprites.emplace_back(new MultiSprite("RunningMan2R", float(rand()%350), float(rand()%400)));
   }
   //Viewport::getInstance().setObjectToTrack(star);
   Viewport::getInstance().setObjectToTrack(sprites[currentSprite]);
