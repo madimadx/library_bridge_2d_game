@@ -35,5 +35,5 @@ private:
     multiImages()
   {}
   ImageFactory(const ImageFactory&) = delete;
-  ImageFactory& operator=(const ImageFactory&);
+  ImageFactory& operator=(const ImageFactory&) = delete;
 };
