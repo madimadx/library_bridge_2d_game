@@ -11,6 +11,7 @@ public:
   SDL_Surface* readSurface(const std::string& filename);
   void writeText(const std::string&, int, int) const;
   SDL_Renderer* getRenderer() const { return renderer; }
+  //int getFontSize();
 private:
   int init;
   SDL_Renderer* renderer;
