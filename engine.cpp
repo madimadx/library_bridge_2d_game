@@ -6,6 +6,7 @@
 #include <iomanip>
 #include "sprite.h"
 #include "multisprite.h"
+#include "multisprite2way.h"
 #include "gamedata.h"
 #include "engine.h"
 #include "frameGenerator.h"
@@ -38,6 +39,7 @@ Engine::Engine() :
 {
   srand(time(NULL));
   sprites.emplace_back(new Sprite("YellowStar"));
+  sprites.emplace_back(new MultiSprite2way("RunningMan2way"));
   for (int i = 0; i < 5; i++) {
     sprites.emplace_back(new MultiSprite("SpinningStar", float(rand()%350), float(rand()%400)));
   }
