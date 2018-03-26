@@ -16,7 +16,12 @@ Viewport::Viewport() :
   viewHeight(gdata.getXmlInt("view/height")),
   objWidth(0), objHeight(0),
   objectToTrack(NULL)
-{}
+{
+  altColor.r = Gamedata::getInstance().getXmlInt("altColor/r");
+  altColor.g = Gamedata::getInstance().getXmlInt("altColor/g");
+  altColor.b = Gamedata::getInstance().getXmlInt("altColor/b");
+  altColor.a = Gamedata::getInstance().getXmlInt("altColor/a");
+}
 
 void Viewport::setObjectToTrack(const Drawable *obj) {
   objectToTrack = obj;
@@ -26,16 +31,16 @@ void Viewport::setObjectToTrack(const Drawable *obj) {
 
 void Viewport::draw() const {
   IoMod::getInstance().
-    writeText("Tracking: "+objectToTrack->getName(), 30, 30);
+    writeText("Tracking: "+objectToTrack->getName(), 30, 30, altColor);
   IoMod::getInstance().
-      writeText(gdata.getXmlStr("me"), 30, viewHeight-30-gdata.getXmlInt("font/size"));
+      writeText(gdata.getXmlStr("me"), 30, viewHeight-30-gdata.getXmlInt("font/size"), altColor);
 }
 
 void Viewport::drawFPS(const int FPS) {
   std::stringstream ss;
   ss << "FPS: " << FPS;
   IoMod::getInstance().
-      writeText(ss.str(), 30, viewHeight-30-2*gdata.getXmlInt("font/size"));
+      writeText(ss.str(), 30, viewHeight-30-2*gdata.getXmlInt("font/size"), altColor);
   ss.clear();
 }
 

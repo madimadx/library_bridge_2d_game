@@ -37,6 +37,15 @@
   <alpha>0</alpha>
 </font>
 
+<altColor>
+  <r>50</r>
+  <g>136</g>
+  <b>184</b>
+  <a>1</a>
+</altColor>
+
+<numSprites>2</numSprites>
+
 <SpinningStar>
   <file>assets/spinstar.png</file>
   <startLoc x="50" y="140"/>

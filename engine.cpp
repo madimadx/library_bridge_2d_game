@@ -54,7 +54,7 @@ void Engine::update(Uint32 ticks) {
 
 void Engine::switchSprite(){
   ++currentSprite;
-  currentSprite = currentSprite % 2;
+  currentSprite = currentSprite % Gamedata::getInstance().getXmlInt("numSprites") ;
   if ( currentSprite ) {
     Viewport::getInstance().setObjectToTrack(spinningStar);
   }

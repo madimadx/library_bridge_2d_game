@@ -28,6 +28,7 @@ private:
   int viewHeight;
   int objWidth;
   int objHeight;
+  SDL_Color altColor;
 
   const Drawable *objectToTrack;
 
