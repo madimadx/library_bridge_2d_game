@@ -8,12 +8,16 @@ Project no: 3
 
 Project due date: 03/26/2018
 
-Project description: 
+Project description: Added parallax and 2 way multi-sprites to vertical
+  scrolling game.
 
-What sprite did I repeat at least 7 times?
+What sprite did I repeat at least 7 times? My 2-way running man multisprite.
 
-What sprite (not Sprite or MultiSprite) did I design?
+What sprite (not Sprite or MultiSprite) did I design? The running man, single
+  and multi.
 
-The easiest part of this project:
+The easiest part of this project: Making the graphics. I'll put more work
+  into them later.
 
-Problems that I had in completing this project:
+Problems that I had in completing this project: Ooooeeeee I think I have some
+  memory leaks. I also had some trouble with getting all the iterators down.
