@@ -24,9 +24,9 @@ private:
   World clouds;
   Viewport& viewport;
 
-  Drawable* sprites;
-  Drawable* star;
-  Drawable* spinningStar;
+  std::vector<Drawable*> sprites;
+  //Drawable* star;
+  //Drawable* spinningStar;
   int currentSprite;
 
   bool makeVideo;

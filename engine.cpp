@@ -11,8 +11,14 @@
 #include "frameGenerator.h"
 
 Engine::~Engine() {
-  delete star;
-  delete spinningStar;
+  /*delete star;
+  delete spinningStar;*/
+  std::vector<Drawable*>::const_iterator itr =
+    sprites.begin();
+  for ( ; itr != sprites.end(); itr++) {
+    delete *itr;
+  }
+
   std::cout << "Terminating program" << std::endl;
 }
 
@@ -25,13 +31,18 @@ Engine::Engine() :
   world("middle", Gamedata::getInstance().getXmlInt("middle/factor") ),
   clouds("top", Gamedata::getInstance().getXmlInt("top/factor") ),
   viewport( Viewport::getInstance() ),
-  star(new Sprite("YellowStar")),
-  spinningStar(new MultiSprite("SpinningStar")),
+  //star(new Sprite("YellowStar")),
+  //spinningStar(new MultiSprite("SpinningStar")),
   currentSprite(0),
   makeVideo( false )
 {
-
-  Viewport::getInstance().setObjectToTrack(star);
+  srand(time(NULL));
+  sprites.emplace_back(new Sprite("YellowStar"));
+  for (int i = 0; i < 5; i++) {
+    sprites.emplace_back(new MultiSprite("SpinningStar", float(rand()%350), float(rand()%400)));
+  }
+  //Viewport::getInstance().setObjectToTrack(star);
+  Viewport::getInstance().setObjectToTrack(sprites[currentSprite]);
   std::cout << "Loading complete" << std::endl;
 }
 
@@ -39,8 +50,15 @@ void Engine::draw() const {
   bricks.draw();
   world.draw();
 
-  star->draw();
-  spinningStar->draw();
+  //star->draw();
+  //spinningStar->draw();
+  std::vector<Drawable*>::const_iterator itr =
+    sprites.begin();
+  for ( ; itr != sprites.end(); itr++) {
+    (*itr)->draw();
+  }
+  //sprites[0]->draw();
+  //sprites[1]->draw();
 
   clouds.draw();
 
@@ -53,8 +71,15 @@ void Engine::update(Uint32 ticks) {
   bricks.update();
   world.update();
 
-  star->update(ticks);
-  spinningStar->update(ticks);
+  //star->update(ticks);
+  //spinningStar->update(ticks);
+  //sprites[0]->update(ticks);
+  //sprites[1]->update(ticks);
+  std::vector<Drawable*>::const_iterator itr =
+    sprites.begin();
+  for ( ; itr != sprites.end(); itr++) {
+    (*itr)->update(ticks);
+  }
 
   clouds.update();
   viewport.drawFPS(clock.getFps());
@@ -63,13 +88,9 @@ void Engine::update(Uint32 ticks) {
 
 void Engine::switchSprite(){
   ++currentSprite;
-  currentSprite = currentSprite % Gamedata::getInstance().getXmlInt("numSprites") ;
-  if ( currentSprite ) {
-    Viewport::getInstance().setObjectToTrack(spinningStar);
-  }
-  else {
-    Viewport::getInstance().setObjectToTrack(star);
-  }
+  //currentSprite = currentSprite % Gamedata::getInstance().getXmlInt("numSprites") ;
+  currentSprite = currentSprite % sprites.size();
+  Viewport::getInstance().setObjectToTrack(sprites[currentSprite]);
 }
 
 void Engine::play() {

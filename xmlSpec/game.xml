@@ -56,8 +56,6 @@
   <a>1</a>
 </altColor>
 
-<numSprites>2</numSprites>
-
 <RunningMan>
   <file>assets/spriteMult2.png</file>
   <startLoc x="50" y="140"/>
