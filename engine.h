@@ -24,6 +24,7 @@ private:
   World clouds;
   Viewport& viewport;
 
+  Drawable* sprites;
   Drawable* star;
   Drawable* spinningStar;
   int currentSprite;

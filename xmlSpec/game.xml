@@ -58,6 +58,18 @@
 
 <numSprites>2</numSprites>
 
+<RunningMan>
+  <file>assets/spriteMult2.png</file>
+  <startLoc x="50" y="140"/>
+  <frames>2</frames>
+  <imageWidth>256</imageWidth>
+  <imageHeight>128</imageHeight>
+  <frameInterval>50</frameInterval>
+  <speedX>50</speedX>
+  <speedY>200</speedY>
+  <transparency>true</transparency>
+</RunningMan>
+
 <SpinningStar>
   <file>assets/spinstar.png</file>
   <startLoc x="50" y="140"/>
