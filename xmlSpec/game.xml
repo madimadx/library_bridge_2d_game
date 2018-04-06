@@ -13,29 +13,29 @@
 <username>mmaddox</username>
 
 <view>
-  <width>480</width>
-  <height>640</height>
+  <width>720</width>
+  <height>960</height>
 </view>
 
 <world>
-  <width>480</width>
-  <height>4000</height>
+  <width>720</width>
+  <height>3840</height>
 </world>
 
 <back>
-  <file>assets/vert_brick.png</file>
+  <file>assets/brick.png</file>
   <factor>3</factor>
   <transparency>true</transparency>
 </back>
 
 <middle>
-  <file>assets/vert_bridge.png</file>
+  <file>assets/bridge.png</file>
   <factor>5</factor>
   <transparency>true</transparency>
 </middle>
 
 <top>
-  <file>assets/vert_clouds.png</file>
+  <file>assets/clouds.png</file>
   <factor>1</factor>
   <transparency>true</transparency>
 </top>
@@ -91,6 +91,18 @@
   <speedY>200</speedY>
   <transparency>true</transparency>
 </Student>
+
+<Paper>
+  <file>assets/flying_paper.png</file>
+  <startLoc x="50" y="140"/>
+  <frames>7</frames>
+  <imageWidth>86.52</imageWidth>
+  <imageHeight>48.34</imageHeight>
+  <frameInterval>100</frameInterval>
+  <speedX>50</speedX>
+  <speedY>200</speedY>
+  <transparency>true</transparency>
+</Paper>
 
 <RunningMan2way>
   <file>assets/spriteMult2RL.png</file>
