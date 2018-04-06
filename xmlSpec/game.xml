@@ -80,6 +80,18 @@
   <transparency>true</transparency>
 </RunningMan2R>
 
+<Student>
+  <file>assets/student_4frames.png</file>
+  <startLoc x="50" y="140"/>
+  <frames>4</frames>
+  <imageWidth>66</imageWidth>
+  <imageHeight>88</imageHeight>
+  <frameInterval>100</frameInterval>
+  <speedX>50</speedX>
+  <speedY>200</speedY>
+  <transparency>true</transparency>
+</Student>
+
 <RunningMan2way>
   <file>assets/spriteMult2RL.png</file>
   <startLoc x="50" y="140"/>
