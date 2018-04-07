@@ -7,6 +7,7 @@
 #include "viewport.h"
 
 class Player;
+class CollisionStrategy;
 
 class Engine {
 public:
@@ -14,6 +15,9 @@ public:
   ~Engine ();
   void play();
   void switchSprite();
+
+  Engine(const Engine&) = delete;
+  Engine& operator=(const Engine&) = delete;
 
 private:
   const RenderContext* rc;
@@ -28,15 +32,16 @@ private:
 
   std::vector<Drawable*> sprites;
   Player* player;
-  int currentSprite;
+  //int currentSprite;
+  std::vector<CollisionStrategy*> strategies;
+  int currentStrategy;
+  bool collision;
 
   bool makeVideo;
 
   void draw() const;
   void update(Uint32);
 
-  Engine(const Engine&) = delete;
-  Engine& operator=(const Engine&) = delete;
   void printScales() const;
   void checkForCollisions();
 };

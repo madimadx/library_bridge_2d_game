@@ -19,7 +19,7 @@
 
 <world>
   <width>720</width>
-  <height>3840</height>
+  <height>1500</height>
 </world>
 
 <back>
@@ -63,8 +63,8 @@
   <frames>4</frames>
   <imageWidth>66</imageWidth>
   <imageHeight>88</imageHeight>
-  <frameInterval>100</frameInterval>
-  <speedX>50</speedX>
+  <frameInterval>200</frameInterval>
+  <speedX>130</speedX>
   <speedY>200</speedY>
   <transparency>true</transparency>
 </Student>

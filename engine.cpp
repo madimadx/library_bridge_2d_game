@@ -11,6 +11,7 @@
 #include "engine.h"
 #include "frameGenerator.h"
 #include "player.h"
+#include "collisionStrategy.h"
 
 Engine::~Engine() {
   std::vector<Drawable*>::const_iterator itr =
@@ -18,7 +19,12 @@ Engine::~Engine() {
   for ( ; itr != sprites.end(); itr++) {
     delete *itr;
   }
+
   delete player;
+
+  for ( CollisionStrategy* strategy : strategies ) {
+    delete strategy;
+  }
 
   std::cout << "Terminating program" << std::endl;
 }
@@ -32,8 +38,11 @@ Engine::Engine() :
   world("middle", Gamedata::getInstance().getXmlInt("middle/factor") ),
   clouds("top", Gamedata::getInstance().getXmlInt("top/factor") ),
   viewport( Viewport::getInstance() ),
+  sprites(),
   player(new Player("Student")),
-  currentSprite(0),
+  strategies(),
+  currentStrategy(0),
+  collision(false),
   makeVideo( false )
 {
   srand(time(NULL));
@@ -41,6 +50,11 @@ Engine::Engine() :
   for (int i = 0; i < 7; i++) {
     sprites.emplace_back(new MultiSprite("Paper", float(rand()%350), float(rand()%400)));
   }
+
+  strategies.push_back( new RectangularCollisionStrategy );
+  strategies.push_back( new PerPixelCollisionStrategy );
+  strategies.push_back( new MidPointCollisionStrategy );
+
   Viewport::getInstance().setObjectToTrack(player->getPlayer());
   std::cout << "Loading complete" << std::endl;
 }
@@ -55,6 +69,11 @@ void Engine::draw() const {
     (*itr)->draw();
   }
 
+  IoMod::getInstance().writeText("Press m to change strategy", 500, 60);
+  strategies[currentStrategy]->draw();
+  if ( collision ) {
+    IoMod::getInstance().writeText("Oops: Collision", 500, 90);
+  }
   clouds.draw();
 
   viewport.draw();
@@ -62,7 +81,21 @@ void Engine::draw() const {
   SDL_RenderPresent(renderer);
 }
 
+void Engine::checkForCollisions() {
+  auto it = sprites.begin();
+  while ( it != sprites.end() ) {
+    if ( strategies[currentStrategy]->execute(*(player->getPlayer()), **it) ) {
+      //SmartSprite* doa = *it;
+      //player->detach(doa);
+      //delete doa;
+      it = sprites.erase(it);
+    }
+    else ++it;
+  }
+}
+
 void Engine::update(Uint32 ticks) {
+  checkForCollisions();
   bricks.update();
   world.update();
 
@@ -77,7 +110,7 @@ void Engine::update(Uint32 ticks) {
   //viewport.drawFPS(clock.getFps());
   viewport.update(); // always update viewport last
 }
-
+/*
 void Engine::switchSprite(){
   ++currentSprite;
   currentSprite = currentSprite % (sprites.size()+1);
@@ -86,6 +119,7 @@ void Engine::switchSprite(){
   else
     Viewport::getInstance().setObjectToTrack(player->getPlayer());
 }
+*/
 
 void Engine::play() {
   SDL_Event event;
@@ -108,9 +142,12 @@ void Engine::play() {
           if ( clock.isPaused() ) clock.unpause();
           else clock.pause();
         }
-        if ( keystate[SDL_SCANCODE_T] ) {
-          switchSprite();
+        if ( keystate[SDL_SCANCODE_M] ) {
+          currentStrategy = (1 + currentStrategy) % strategies.size();
         }
+        /*if ( keystate[SDL_SCANCODE_T] ) {
+          switchSprite();
+        }*/
         if (keystate[SDL_SCANCODE_F4] && !makeVideo) {
           std::cout << "Initiating frame capture" << std::endl;
           makeVideo = true;
