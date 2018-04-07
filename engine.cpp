@@ -58,7 +58,7 @@ void Engine::draw() const {
   clouds.draw();
 
   viewport.draw();
-  viewport.drawFPS(clock.getFps());
+  //viewport.drawFPS(clock.getFps());
   SDL_RenderPresent(renderer);
 }
 
@@ -74,17 +74,17 @@ void Engine::update(Uint32 ticks) {
   player->update(ticks);
 
   clouds.update();
-  viewport.drawFPS(clock.getFps());
+  //viewport.drawFPS(clock.getFps());
   viewport.update(); // always update viewport last
 }
 
 void Engine::switchSprite(){
-  //++currentSprite;
-  //currentSprite = currentSprite % (sprites.size()+1);
-  //if (currentSprite != static_cast<int>(sprites.size()))
-    //Viewport::getInstance().setObjectToTrack(sprites[currentSprite]);
-  //else
-    //Viewport::getInstance().setObjectToTrack(player->getPlayer());
+  ++currentSprite;
+  currentSprite = currentSprite % (sprites.size()+1);
+  if (currentSprite != 0)
+    Viewport::getInstance().setObjectToTrack(sprites[currentSprite-1]);
+  else
+    Viewport::getInstance().setObjectToTrack(player->getPlayer());
 }
 
 void Engine::play() {
