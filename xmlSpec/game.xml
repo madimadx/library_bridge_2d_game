@@ -56,33 +56,10 @@
   <a>1</a>
 </altColor>
 
-<RunningMan>
-  <file>assets/spriteSingle.png</file>
-  <startLoc x="50" y="140"/>
-  <frames>1</frames>
-  <imageWidth>128</imageWidth>
-  <imageHeight>128</imageHeight>
-  <frameInterval>100</frameInterval>
-  <speedX>50</speedX>
-  <speedY>200</speedY>
-  <transparency>true</transparency>
-</RunningMan>
-
-<RunningMan2R>
-  <file>assets/spriteMult2R.png</file>
-  <startLoc x="50" y="140"/>
-  <frames>2</frames>
-  <imageWidth>128</imageWidth>
-  <imageHeight>128</imageHeight>
-  <frameInterval>100</frameInterval>
-  <speedX>50</speedX>
-  <speedY>200</speedY>
-  <transparency>true</transparency>
-</RunningMan2R>
 
 <Student>
   <file>assets/student_4frames.png</file>
-  <startLoc x="50" y="140"/>
+  <startLoc x="200" y="140"/>
   <frames>4</frames>
   <imageWidth>66</imageWidth>
   <imageHeight>88</imageHeight>
@@ -94,7 +71,7 @@
 
 <Paper>
   <file>assets/flying_paper.png</file>
-  <startLoc x="50" y="140"/>
+  <startLoc x="100" y="140"/>
   <frames>7</frames>
   <imageWidth>86.52</imageWidth>
   <imageHeight>48.34</imageHeight>
@@ -103,18 +80,6 @@
   <speedY>200</speedY>
   <transparency>true</transparency>
 </Paper>
-
-<RunningMan2way>
-  <file>assets/spriteMult2RL.png</file>
-  <startLoc x="50" y="140"/>
-  <frames>4</frames>
-  <imageWidth>128</imageWidth>
-  <imageHeight>128</imageHeight>
-  <frameInterval>100</frameInterval>
-  <speedX>50</speedX>
-  <speedY>200</speedY>
-  <transparency>true</transparency>
-</RunningMan2way>
 
 <SpinningStar>
   <file>assets/spinstar.png</file>

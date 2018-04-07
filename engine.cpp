@@ -10,15 +10,15 @@
 #include "gamedata.h"
 #include "engine.h"
 #include "frameGenerator.h"
+#include "player.h"
 
 Engine::~Engine() {
-  /*delete star;
-  delete spinningStar;*/
   std::vector<Drawable*>::const_iterator itr =
     sprites.begin();
   for ( ; itr != sprites.end(); itr++) {
     delete *itr;
   }
+  delete player;
 
   std::cout << "Terminating program" << std::endl;
 }
@@ -32,36 +32,28 @@ Engine::Engine() :
   world("middle", Gamedata::getInstance().getXmlInt("middle/factor") ),
   clouds("top", Gamedata::getInstance().getXmlInt("top/factor") ),
   viewport( Viewport::getInstance() ),
-  //star(new Sprite("YellowStar")),
-  //spinningStar(new MultiSprite("SpinningStar")),
+  player(new Player("Student")),
   currentSprite(0),
   makeVideo( false )
 {
   srand(time(NULL));
-  //sprites.emplace_back(new Sprite("RunningMan"));
-  //sprites.emplace_back(new MultiSprite("RunningMan2R"));
-  sprites.emplace_back(new MultiSprite("Student"));
+
   for (int i = 0; i < 7; i++) {
     sprites.emplace_back(new MultiSprite("Paper", float(rand()%350), float(rand()%400)));
   }
-  //Viewport::getInstance().setObjectToTrack(star);
-  Viewport::getInstance().setObjectToTrack(sprites[currentSprite]);
+  Viewport::getInstance().setObjectToTrack(player->getPlayer());
   std::cout << "Loading complete" << std::endl;
 }
 
 void Engine::draw() const {
   bricks.draw();
   world.draw();
-
-  //star->draw();
-  //spinningStar->draw();
+  player->draw();
   std::vector<Drawable*>::const_iterator itr =
     sprites.begin();
   for ( ; itr != sprites.end(); itr++) {
     (*itr)->draw();
   }
-  //sprites[0]->draw();
-  //sprites[1]->draw();
 
   clouds.draw();
 
@@ -74,15 +66,12 @@ void Engine::update(Uint32 ticks) {
   bricks.update();
   world.update();
 
-  //star->update(ticks);
-  //spinningStar->update(ticks);
-  //sprites[0]->update(ticks);
-  //sprites[1]->update(ticks);
   std::vector<Drawable*>::const_iterator itr =
     sprites.begin();
   for ( ; itr != sprites.end(); itr++) {
     (*itr)->update(ticks);
   }
+  player->update(ticks);
 
   clouds.update();
   viewport.drawFPS(clock.getFps());
@@ -90,10 +79,12 @@ void Engine::update(Uint32 ticks) {
 }
 
 void Engine::switchSprite(){
-  ++currentSprite;
-  //currentSprite = currentSprite % Gamedata::getInstance().getXmlInt("numSprites") ;
-  currentSprite = currentSprite % sprites.size();
-  Viewport::getInstance().setObjectToTrack(sprites[currentSprite]);
+  //++currentSprite;
+  //currentSprite = currentSprite % (sprites.size()+1);
+  //if (currentSprite != static_cast<int>(sprites.size()))
+    //Viewport::getInstance().setObjectToTrack(sprites[currentSprite]);
+  //else
+    //Viewport::getInstance().setObjectToTrack(player->getPlayer());
 }
 
 void Engine::play() {
@@ -136,6 +127,18 @@ void Engine::play() {
     ticks = clock.getElapsedTicks();
     if ( ticks > 0 ) {
       clock.incrFrame();
+      if (keystate[SDL_SCANCODE_A]) {
+        static_cast<Player*>(player)->left();
+      }
+      if (keystate[SDL_SCANCODE_D]) {
+        static_cast<Player*>(player)->right();
+      }
+      if (keystate[SDL_SCANCODE_W]) {
+        static_cast<Player*>(player)->up();
+      }
+      if (keystate[SDL_SCANCODE_S]) {
+        static_cast<Player*>(player)->down();
+      }
       draw();
       update(ticks);
       if ( makeVideo ) {

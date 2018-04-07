@@ -19,6 +19,7 @@ OBJS = \
 	sprite.o \
 	multisprite.o \
 	multisprite2way.o\
+	player.o \
 	vector2f.o \
 	clock.o \
 	engine.o \
