@@ -36,9 +36,12 @@ private:
   std::vector<CollisionStrategy*> strategies;
   int currentStrategy;
   bool collision;
+  int popUpDelay;
+  int delayCount;
 
   bool makeVideo;
 
+  void resetDelay();
   void draw() const;
   void update(Uint32);
 

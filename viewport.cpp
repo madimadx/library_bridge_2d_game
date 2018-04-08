@@ -31,8 +31,6 @@ void Viewport::setObjectToTrack(const Drawable *obj) {
 
 void Viewport::draw() const {
   IoMod::getInstance().
-    writeText("Tracking: "+objectToTrack->getName(), 30, 30, altColor);
-  IoMod::getInstance().
       writeText(gdata.getXmlStr("me"), 30, viewHeight-30-gdata.getXmlInt("font/size"), altColor);
 }
 

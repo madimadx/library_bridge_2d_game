@@ -43,19 +43,20 @@
 <font name="font">
   <file>fonts/arial.ttf</file>
   <size>24</size>
-  <red>255</red>
-  <green>255</green>
+  <red>0</red>
+  <green>0</green>
   <blue>255</blue>
   <alpha>0</alpha>
 </font>
 
 <altColor>
-  <r>50</r>
-  <g>136</g>
-  <b>184</b>
+  <r>0</r>
+  <g>0</g>
+  <b>255</b>
   <a>1</a>
 </altColor>
 
+<popUpDelay>100</popUpDelay>
 
 <Student>
   <file>assets/student_4frames.png</file>

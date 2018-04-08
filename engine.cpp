@@ -43,6 +43,8 @@ Engine::Engine() :
   strategies(),
   currentStrategy(0),
   collision(false),
+  popUpDelay(Gamedata::getInstance().getXmlInt("popUpDelay")),
+  delayCount(0),
   makeVideo( false )
 {
   srand(time(NULL));
@@ -68,13 +70,12 @@ void Engine::draw() const {
   for ( ; itr != sprites.end(); itr++) {
     (*itr)->draw();
   }
-
-  IoMod::getInstance().writeText("Press m to change strategy", 500, 60);
-  strategies[currentStrategy]->draw();
-  if ( collision ) {
-    IoMod::getInstance().writeText("Oops: Collision", 500, 90);
-  }
   clouds.draw();
+
+  IoMod::getInstance().writeText("Press m to change strategy", 30, 30);
+  strategies[currentStrategy]->draw();
+  if ( collision )
+    IoMod::getInstance().writeText("Oops: Collision", 30, 110);
 
   viewport.draw();
   //viewport.drawFPS(clock.getFps());
@@ -88,14 +89,27 @@ void Engine::checkForCollisions() {
       //SmartSprite* doa = *it;
       //player->detach(doa);
       //delete doa;
+      collision = true;
+      resetDelay();
       it = sprites.erase(it);
     }
     else ++it;
   }
 }
 
+
+void Engine::resetDelay() {
+  delayCount = 0;
+}
+
+
+
 void Engine::update(Uint32 ticks) {
   checkForCollisions();
+  if ((delayCount++) == popUpDelay) {
+      resetDelay();
+      collision = false;
+  }
   bricks.update();
   world.update();
 
@@ -163,6 +177,7 @@ void Engine::play() {
 
     ticks = clock.getElapsedTicks();
     if ( ticks > 0 ) {
+      delayCount++;
       clock.incrFrame();
       if (keystate[SDL_SCANCODE_A]) {
         static_cast<Player*>(player)->left();
