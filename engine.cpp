@@ -14,10 +14,8 @@
 #include "collisionStrategy.h"
 
 Engine::~Engine() {
-  std::vector<Drawable*>::const_iterator itr =
-    sprites.begin();
-  for ( ; itr != sprites.end(); itr++) {
-    delete *itr;
+  for (Drawable* dummie: dummies) {
+    delete dummie;
   }
   for ( Drawable* smartie : smarties ) {
     delete smartie;
@@ -41,7 +39,7 @@ Engine::Engine() :
   world("middle", Gamedata::getInstance().getXmlInt("middle/factor") ),
   clouds("top", Gamedata::getInstance().getXmlInt("top/factor") ),
   viewport( Viewport::getInstance() ),
-  sprites(),
+  dummies(),
   smarties(),
   player(new Player("Student")),
   strategies(),
@@ -73,10 +71,9 @@ void Engine::draw() const {
   bricks.draw();
   world.draw();
   player->draw();
-  std::vector<Drawable*>::const_iterator itr =
-    sprites.begin();
-  for ( ; itr != sprites.end(); itr++) {
-    (*itr)->draw();
+
+  for (const Drawable* dummie : dummies) {
+    dummie->draw();
   }
   for ( const Drawable* smartie : smarties ) {
       smartie->draw();
@@ -98,9 +95,9 @@ void Engine::checkForCollisions() {
   auto it = smarties.begin();
   while ( it != smarties.end() ) {
     if ( strategies[currentStrategy]->execute(*(player->getPlayer()), **it) ) {
-      //SmartSprite* doa = *it;
-      //player->detach(doa);
-      //delete doa;
+      SmartSprite* doa = *it;
+      player->detach(doa);
+      delete doa;
       collision = true;
       resetDelay();
       it = smarties.erase(it);
@@ -122,10 +119,8 @@ void Engine::update(Uint32 ticks) {
   bricks.update();
   world.update();
 
-  std::vector<Drawable*>::const_iterator itr =
-    sprites.begin();
-  for ( ; itr != sprites.end(); itr++) {
-    (*itr)->update(ticks);
+  for (Drawable* dummie : dummies) {
+    dummie->update(ticks);
   }
   for ( Drawable* smartie : smarties ) {
     smartie->update( ticks );
