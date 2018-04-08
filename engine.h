@@ -8,13 +8,13 @@
 
 class Player;
 class CollisionStrategy;
+class SmartSprite;
 
 class Engine {
 public:
   Engine ();
   ~Engine ();
   void play();
-  void switchSprite();
 
   Engine(const Engine&) = delete;
   Engine& operator=(const Engine&) = delete;
@@ -31,8 +31,8 @@ private:
   Viewport& viewport;
 
   std::vector<Drawable*> sprites;
+  std::vector<SmartSprite*> smarties;
   Player* player;
-  //int currentSprite;
   std::vector<CollisionStrategy*> strategies;
   int currentStrategy;
   bool collision;

@@ -3,9 +3,11 @@
 #include <SDL.h>
 #include <string>
 #include <vector>
+#include <list>
 #include <cmath>
-
 #include "multisprite.h"
+
+class SmartSprite;
 
 class Player {
 public:
@@ -32,6 +34,9 @@ public:
     return player.getSurface();
   }
 
+  void attach( SmartSprite* o ) { observers.push_back(o); }
+  void detach( SmartSprite* o );
+
   void right();
   void left();
   void up();
@@ -45,5 +50,8 @@ private:
   Vector2f initialVelocity;
   int worldWidth;
   int worldHeight;
+
+protected:
+  std::list<SmartSprite*> observers;
 };
 #endif

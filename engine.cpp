@@ -6,7 +6,7 @@
 #include <iomanip>
 #include "sprite.h"
 #include "multisprite.h"
-#include "multisprite2way.h"
+#include "smartSprite.h"
 #include "gamedata.h"
 #include "engine.h"
 #include "frameGenerator.h"
@@ -18,6 +18,9 @@ Engine::~Engine() {
     sprites.begin();
   for ( ; itr != sprites.end(); itr++) {
     delete *itr;
+  }
+  for ( Drawable* smartie : smarties ) {
+    delete smartie;
   }
 
   delete player;
@@ -39,6 +42,7 @@ Engine::Engine() :
   clouds("top", Gamedata::getInstance().getXmlInt("top/factor") ),
   viewport( Viewport::getInstance() ),
   sprites(),
+  smarties(),
   player(new Player("Student")),
   strategies(),
   currentStrategy(0),
@@ -49,8 +53,12 @@ Engine::Engine() :
 {
   srand(time(NULL));
 
+  Vector2f pos = (player->getPlayer())->getPosition();
+  int w = (player->getPlayer())->getScaledWidth();
+  int h = (player->getPlayer())->getScaledHeight();
   for (int i = 0; i < 7; i++) {
-    sprites.emplace_back(new MultiSprite("Paper", float(rand()%350), float(rand()%400)));
+    smarties.emplace_back(new SmartSprite("Paper", pos, w, h, float(rand()%350), float(rand()%400)));
+    player->attach( smarties[i] );
   }
 
   strategies.push_back( new RectangularCollisionStrategy );
@@ -70,6 +78,10 @@ void Engine::draw() const {
   for ( ; itr != sprites.end(); itr++) {
     (*itr)->draw();
   }
+  for ( const Drawable* smartie : smarties ) {
+      smartie->draw();
+  }
+
   clouds.draw();
 
   IoMod::getInstance().writeText("Press m to change strategy", 30, 30);
@@ -83,26 +95,23 @@ void Engine::draw() const {
 }
 
 void Engine::checkForCollisions() {
-  auto it = sprites.begin();
-  while ( it != sprites.end() ) {
+  auto it = smarties.begin();
+  while ( it != smarties.end() ) {
     if ( strategies[currentStrategy]->execute(*(player->getPlayer()), **it) ) {
       //SmartSprite* doa = *it;
       //player->detach(doa);
       //delete doa;
       collision = true;
       resetDelay();
-      it = sprites.erase(it);
+      it = smarties.erase(it);
     }
     else ++it;
   }
 }
 
-
 void Engine::resetDelay() {
   delayCount = 0;
 }
-
-
 
 void Engine::update(Uint32 ticks) {
   checkForCollisions();
@@ -118,22 +127,15 @@ void Engine::update(Uint32 ticks) {
   for ( ; itr != sprites.end(); itr++) {
     (*itr)->update(ticks);
   }
+  for ( Drawable* smartie : smarties ) {
+    smartie->update( ticks );
+  }
   player->update(ticks);
 
   clouds.update();
   //viewport.drawFPS(clock.getFps());
   viewport.update(); // always update viewport last
 }
-/*
-void Engine::switchSprite(){
-  ++currentSprite;
-  currentSprite = currentSprite % (sprites.size()+1);
-  if (currentSprite != 0)
-    Viewport::getInstance().setObjectToTrack(sprites[currentSprite-1]);
-  else
-    Viewport::getInstance().setObjectToTrack(player->getPlayer());
-}
-*/
 
 void Engine::play() {
   SDL_Event event;

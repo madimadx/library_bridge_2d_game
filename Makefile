@@ -20,6 +20,7 @@ OBJS = \
 	multisprite.o \
 	multisprite2way.o\
 	player.o \
+	smartSprite.o \
 	collisionStrategy.o \
 	vector2f.o \
 	clock.o \
