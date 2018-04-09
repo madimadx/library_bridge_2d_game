@@ -7,6 +7,7 @@
 #include "sprite.h"
 #include "multisprite.h"
 #include "smartSprite.h"
+#include "hud.h"
 #include "gamedata.h"
 #include "engine.h"
 #include "frameGenerator.h"
@@ -43,8 +44,10 @@ Engine::Engine() :
   smarties(),
   player(new Player("Student")),
   strategies(),
+  theHud(new Hud("Sticky")),
   currentStrategy(0),
   collision(false),
+  hudOn(false),
   popUpDelay(Gamedata::getInstance().getXmlInt("popUpDelay")),
   delayCount(0),
   makeVideo( false )
@@ -58,6 +61,7 @@ Engine::Engine() :
     smarties.emplace_back(new SmartSprite("Paper", pos, w, h, float(rand()%350), float(rand()%400)));
     player->attach( smarties[i] );
   }
+  dummies.emplace_back(new MultiSprite("Paper", float(rand()%350), float(rand()%400)));
 
   strategies.push_back( new RectangularCollisionStrategy );
   strategies.push_back( new PerPixelCollisionStrategy );
@@ -86,6 +90,9 @@ void Engine::draw() const {
   if ( collision )
     IoMod::getInstance().writeText("Oops: Collision", 30, 110);
 
+  if ( hudOn ) {
+    theHud->draw();
+  }
   viewport.draw();
   //viewport.drawFPS(clock.getFps());
   SDL_RenderPresent(renderer);
@@ -103,6 +110,15 @@ void Engine::checkForCollisions() {
       it = smarties.erase(it);
     }
     else ++it;
+  }
+  auto itr = dummies.begin();
+  while ( itr != dummies.end() ) {
+    if ( strategies[currentStrategy]->execute(*(player->getPlayer()), **itr) ) {
+      collision = true;
+      resetDelay();
+      itr = dummies.erase(itr);
+    }
+    else ++itr;
   }
 }
 
@@ -126,6 +142,7 @@ void Engine::update(Uint32 ticks) {
     smartie->update( ticks );
   }
   player->update(ticks);
+  theHud->update(ticks);
 
   clouds.update();
   //viewport.drawFPS(clock.getFps());
@@ -156,9 +173,12 @@ void Engine::play() {
         if ( keystate[SDL_SCANCODE_M] ) {
           currentStrategy = (1 + currentStrategy) % strategies.size();
         }
-        /*if ( keystate[SDL_SCANCODE_T] ) {
-          switchSprite();
-        }*/
+        if ( keystate[SDL_SCANCODE_F1] && hudOn) {
+          hudOn = false;
+        }
+        else if ( keystate[SDL_SCANCODE_F1] && !hudOn) {
+          hudOn = true;
+        }
         if (keystate[SDL_SCANCODE_F4] && !makeVideo) {
           std::cout << "Initiating frame capture" << std::endl;
           makeVideo = true;

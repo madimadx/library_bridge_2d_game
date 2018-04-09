@@ -83,4 +83,16 @@
   <transparency>true</transparency>
 </Paper>
 
+<Sticky>
+  <file>assets/sticky_note.png</file>
+  <startLoc x="200" y="140"/>
+  <frames>1</frames>
+  <imageWidth>195</imageWidth>
+  <imageHeight>179</imageHeight>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <frameInterval>200</frameInterval>
+  <transparency>true</transparency>
+</Sticky>
+
 </GameData>

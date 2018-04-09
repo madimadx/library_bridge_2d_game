@@ -9,6 +9,7 @@
 class Player;
 class CollisionStrategy;
 class SmartSprite;
+class Hud;
 
 class Engine {
 public:
@@ -34,8 +35,10 @@ private:
   std::vector<SmartSprite*> smarties;
   Player* player;
   std::vector<CollisionStrategy*> strategies;
+  Hud* theHud;
   int currentStrategy;
   bool collision;
+  bool hudOn;
   int popUpDelay;
   int delayCount;
 
