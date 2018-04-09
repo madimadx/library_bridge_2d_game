@@ -11,7 +11,6 @@ public:
   const Sprite* getHudSprite() const { return &hudSprite; }
   Hud& operator=(const Hud&) = delete;
   void draw();
-  //void update(Uint32 ticks);
   void stop();
 private:
   int startLocX;
