@@ -4,20 +4,18 @@ Course: CPSC 4160
 
 Clemson Email Address: mmaddox@clemson.edu
 
-Project no: 3
+Project no: 4
 
-Project due date: 03/26/2018
+Project due date: 04/09/2018
 
-Project description: Added parallax and 2 way multi-sprites to vertical
-  scrolling game.
+Project description:
 
-What sprite did I repeat at least 7 times? My 2-way running man multisprite.
+I would like to modify player movement so it's not smooth but at intervals, like hopping.
+I will limit movement to just in the bridge. For levels, I'd like to imitate frogger in that each
+level has more obstacles and gets quicker. The end will be some certain number of levels, perhaps 10.
 
-What sprite (not Sprite or MultiSprite) did I design? The running man, single
-  and multi.
+The player will have 3 lives. They respawn where they die until they run out of lives and then have to start from the beginning.
 
-The easiest part of this project: Making the graphics. I'll put more work
-  into them later.
+I will add more sprites and variety in them and they will be placed along the bridge.
 
-Problems that I had in completing this project: Ooooeeeee I think I have some
-  memory leaks. I also had some trouble with getting all the iterators down.
+Score is based on how far they go in the game.

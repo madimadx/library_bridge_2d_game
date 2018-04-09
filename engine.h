@@ -16,6 +16,7 @@ public:
   Engine ();
   ~Engine ();
   void play();
+  void menu();
 
   Engine(const Engine&) = delete;
   Engine& operator=(const Engine&) = delete;
@@ -51,6 +52,7 @@ private:
 
   bool makeVideo;
 
+  void drawMenu() const;
   void resetDelay();
   void draw() const;
   void update(Uint32);

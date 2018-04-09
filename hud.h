@@ -12,9 +12,12 @@ public:
   Hud& operator=(const Hud&) = delete;
   void draw();
   void stop();
+  void update(int, int);
 private:
   int startLocX;
   int startLocY;
+  int currOffX;
+  int currOffY;
   Sprite hudSprite;
 };
 

@@ -71,6 +71,12 @@ Engine::Engine() :
   std::cout << "Loading complete" << std::endl;
 }
 
+void Engine::drawMenu() const {
+  bricks.draw();
+  IoMod::getInstance().writeText("Press any key to begin", 220, 110);
+  SDL_RenderPresent(renderer);
+}
+
 void Engine::draw() const {
   bricks.draw();
   world.draw();
@@ -89,6 +95,7 @@ void Engine::draw() const {
   strategies[currentStrategy]->draw();
   if ( collision )
     IoMod::getInstance().writeText("Oops: Collision", 30, 110);
+
 
   viewport.draw();
   //viewport.drawFPS(clock.getFps());
@@ -139,10 +146,41 @@ void Engine::update(Uint32 ticks) {
     smartie->update( ticks );
   }
   player->update(ticks);
-
+  theHud->update(viewport.getX(), viewport.getY());
   clouds.update();
   //viewport.drawFPS(clock.getFps());
   viewport.update(); // always update viewport last
+}
+
+void Engine::menu() {
+  SDL_Event event;
+  const Uint8* keystate;
+  bool done = false;
+  Uint32 ticks = clock.getElapsedTicks();
+  FrameGenerator frameGen;
+
+  while (!done) {
+    while (SDL_PollEvent(&event)) {
+      keystate = SDL_GetKeyboardState(NULL);
+      /*
+      if (event.type ==  SDL_QUIT) { done = true; break; }
+      if (keystate[SDL_SCANCODE_ESCAPE] || keystate[SDL_SCANCODE_Q]) {
+        done = true;
+        break;
+      }
+      */
+      if (event.type == SDL_KEYDOWN)
+        return;
+    }
+
+    ticks = clock.getElapsedTicks();
+    if ( ticks > 0 ) {
+      delayCount++;
+      clock.incrFrame();
+      drawMenu();
+      //update(ticks);
+    }
+  }
 }
 
 void Engine::play() {

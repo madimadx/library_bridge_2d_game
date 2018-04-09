@@ -7,6 +7,7 @@ RenderContext* RenderContext::instance = NULL;
 int main(int, char*[]) {
    try {
       Engine engine;
+      engine.menu();
       engine.play();
       delete RenderContext::getInstance();
    }
