@@ -41,6 +41,13 @@ private:
   bool hudOn;
   int popUpDelay;
   int delayCount;
+  int indexUp = Gamedata::getInstance().getXmlInt("Keys/indexU");
+  int indexDown = Gamedata::getInstance().getXmlInt("Keys/indexD");
+  int indexL = Gamedata::getInstance().getXmlInt("Keys/indexL");
+  int indexR = Gamedata::getInstance().getXmlInt("Keys/indexR");
+  int indexCol = Gamedata::getInstance().getXmlInt("Keys/indexCol");
+  int indexHUD = Gamedata::getInstance().getXmlInt("Keys/indexHUD");
+  int indexPause = Gamedata::getInstance().getXmlInt("Keys/indexPause");
 
   bool makeVideo;
 

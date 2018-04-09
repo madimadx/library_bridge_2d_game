@@ -58,6 +58,23 @@
 
 <popUpDelay>100</popUpDelay>
 
+<Keys>
+  <strU>W</strU>
+  <indexU>26</indexU>
+  <strD>S</strD>
+  <indexD>22</indexD>
+  <strL>A</strL>
+  <indexL>4</indexL>
+  <strR>D</strR>
+  <indexR>7</indexR>
+  <strCol>M</strCol>
+  <indexCol>16</indexCol>
+  <strHUD>F1</strHUD>
+  <indexHUD>58</indexHUD>
+  <strPause>P</strPause>
+  <indexPause>19</indexPause>
+</Keys>
+
 <Student>
   <file>assets/student_4frames.png</file>
   <startLoc x="200" y="140"/>
@@ -85,12 +102,10 @@
 
 <Sticky>
   <file>assets/sticky_note.png</file>
-  <startLoc x="200" y="140"/>
+  <startLoc x="500" y="30"/>
   <frames>1</frames>
   <imageWidth>195</imageWidth>
   <imageHeight>179</imageHeight>
-  <speedX>0</speedX>
-  <speedY>0</speedY>
   <frameInterval>200</frameInterval>
   <transparency>true</transparency>
 </Sticky>

@@ -80,7 +80,7 @@ void Engine::draw() const {
     dummie->draw();
   }
   for ( const Drawable* smartie : smarties ) {
-      smartie->draw();
+    smartie->draw();
   }
 
   clouds.draw();
@@ -90,9 +90,6 @@ void Engine::draw() const {
   if ( collision )
     IoMod::getInstance().writeText("Oops: Collision", 30, 110);
 
-  if ( hudOn ) {
-    theHud->draw();
-  }
   viewport.draw();
   //viewport.drawFPS(clock.getFps());
   SDL_RenderPresent(renderer);
@@ -142,7 +139,6 @@ void Engine::update(Uint32 ticks) {
     smartie->update( ticks );
   }
   player->update(ticks);
-  theHud->update(ticks);
 
   clouds.update();
   //viewport.drawFPS(clock.getFps());
@@ -166,18 +162,25 @@ void Engine::play() {
           done = true;
           break;
         }
-        if ( keystate[SDL_SCANCODE_P] ) {
+        if ( keystate[indexPause] && !hudOn ) {
+          IoMod::getInstance().writeText("Paused", 300, 400);
+          SDL_RenderPresent(renderer);
           if ( clock.isPaused() ) clock.unpause();
           else clock.pause();
         }
-        if ( keystate[SDL_SCANCODE_M] ) {
+        if ( keystate[indexCol] ) {
           currentStrategy = (1 + currentStrategy) % strategies.size();
         }
-        if ( keystate[SDL_SCANCODE_F1] && hudOn) {
+        if ( keystate[indexHUD] && hudOn) {
           hudOn = false;
+          clock.unpause();
         }
-        else if ( keystate[SDL_SCANCODE_F1] && !hudOn) {
+        else if ( keystate[indexHUD] && !hudOn) {
           hudOn = true;
+          theHud->draw();
+          IoMod::getInstance().writeText("Paused", 300, 400);
+          SDL_RenderPresent(renderer);
+          clock.pause();
         }
         if (keystate[SDL_SCANCODE_F4] && !makeVideo) {
           std::cout << "Initiating frame capture" << std::endl;
@@ -196,16 +199,16 @@ void Engine::play() {
     if ( ticks > 0 ) {
       delayCount++;
       clock.incrFrame();
-      if (keystate[SDL_SCANCODE_A]) {
+      if (keystate[indexL]) {
         static_cast<Player*>(player)->left();
       }
-      if (keystate[SDL_SCANCODE_D]) {
+      if (keystate[indexR]) {
         static_cast<Player*>(player)->right();
       }
-      if (keystate[SDL_SCANCODE_W]) {
+      if (keystate[indexUp]) {
         static_cast<Player*>(player)->up();
       }
-      if (keystate[SDL_SCANCODE_S]) {
+      if (keystate[indexDown]) {
         static_cast<Player*>(player)->down();
       }
       draw();
