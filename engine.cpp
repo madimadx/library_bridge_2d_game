@@ -7,7 +7,6 @@
 #include "sprite.h"
 #include "multisprite.h"
 #include "smartSprite.h"
-#include "shootingSprite.h"
 #include "hud.h"
 #include "gamedata.h"
 #include "engine.h"

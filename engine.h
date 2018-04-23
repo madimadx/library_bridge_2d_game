@@ -5,6 +5,7 @@
 #include "clock.h"
 #include "world.h"
 #include "viewport.h"
+#include "shootingSprite.h"
 
 class Player;
 class CollisionStrategy;
