@@ -77,8 +77,9 @@
 
 <Student>
   <file>assets/student_standing.png</file>
-  <startLoc x="200" y="140"/>
+  <startLoc x="338" y="1400"/>
   <frames>2</frames>
+  <deathDelay>400</deathDelay>
   <imageWidth>45</imageWidth>
   <imageHeight>61</imageHeight>
   <frameInterval>400</frameInterval>

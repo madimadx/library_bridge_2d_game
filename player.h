@@ -14,7 +14,7 @@ public:
   Player(const std::string&);
   Player(const Player&);
 
-  void draw() const { player.draw(); }
+  void draw() const { if (!isDeathOn()) player.draw(); else deathDraw();}
   void update(Uint32 ticks);
   const MultiSprite* getPlayer() const { return &player; }
 
@@ -42,6 +42,9 @@ public:
   void up();
   void down();
   void stop();
+  void deathOn() {death = true;}
+  void deathDraw() const;
+  bool isDeathOn() const {return death;}
 
   Player& operator=(const Player&) = delete;
 
@@ -50,6 +53,9 @@ private:
   Vector2f initialVelocity;
   int worldWidth;
   int worldHeight;
+  int elapsedFromDeath = 0;
+  int deathDelay;
+  bool death = false;
 
 protected:
   std::list<SmartSprite*> observers;

@@ -146,6 +146,7 @@ void Engine::checkForCollisions() {
         collision = true;
         resetDelay();
         itrBullet = (*itr)->getBulletList().erase(itrBullet);
+        player->deathOn();
       }
       else ++itrBullet;
     }

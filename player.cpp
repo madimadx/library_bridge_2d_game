@@ -9,6 +9,7 @@ Player::Player( const std::string& name) :
   initialVelocity(player.getVelocity()),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
+  deathDelay(Gamedata::getInstance().getXmlInt(name+"/deathDelay")),
   observers()
 { }
 
@@ -37,6 +38,12 @@ void Player::down()  {
   }
 }
 
+void Player::deathDraw() const {
+  if (elapsedFromDeath % deathDelay > deathDelay/2) {
+    player.draw();
+  }
+}
+
 void Player::detach( SmartSprite* o ) {
   std::list<SmartSprite*>::iterator ptr = observers.begin();
   while ( ptr != observers.end() ) {
@@ -49,11 +56,16 @@ void Player::detach( SmartSprite* o ) {
 }
 
 void Player::update(Uint32 ticks) {
-  player.update(ticks);
-  std::list<SmartSprite*>::iterator ptr = observers.begin();
-  while ( ptr != observers.end() ) {
-    (*ptr)->setPlayerPos( player.getPosition() );
-    ++ptr;
+  if (!isDeathOn()) {
+    player.update(ticks);
+    std::list<SmartSprite*>::iterator ptr = observers.begin();
+    while ( ptr != observers.end() ) {
+      (*ptr)->setPlayerPos( player.getPosition() );
+      ++ptr;
+    }
+    stop();
   }
-  stop();
+  else {
+    elapsedFromDeath += ticks;
+  }
 }
