@@ -100,36 +100,69 @@
   <transparency>true</transparency>
 </Paper>
 
-<OtherStudent>
-  <file>assets/student_side_2_R.png</file>
-  <bullet>PaperOrange</bullet>
-  <startLoc x="300" y="140"/>
+<OtherStudentR>
+  <file>assets/student_side_1_R.png</file>
+  <bullet>PaperOrangeR</bullet>
+  <startLoc x="120" y="300"/>
+  <bulletOff x="-20" y="0"/>
   <speedX>0</speedX>
   <speedY>0</speedY>
-  <frames>2</frames>
+  <frames>1</frames>
   <imageWidth>45</imageWidth>
   <imageHeight>61</imageHeight>
   <frameInterval>400</frameInterval>
   <transparency>true</transparency>
-</OtherStudent>
+</OtherStudentR>
 
-<PaperOrange>
+<OtherStudentL>
+  <file>assets/student_side_1_L.png</file>
+  <bullet>PaperOrangeL</bullet>
+  <startLoc x="560" y="600"/>
+  <bulletOff x="-60" y="0"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <frames>1</frames>
+  <imageWidth>45</imageWidth>
+  <imageHeight>61</imageHeight>
+  <frameInterval>400</frameInterval>
+  <transparency>true</transparency>
+</OtherStudentL>
+
+<PaperOrangeL>
   <file>assets/orangePaper.png</file>
-  <interval>300</interval>
-  <distance>320</distance>
+  <interval>900</interval>
+  <distance>400</distance>
   <imageWidth>36</imageWidth>
   <imageHeight>20</imageHeight>
-  <startLoc x="100" y="100"/>
+  <frames>6</frames>
+  <startLoc x="100" y="600"/>
+  <frameInterval>100</frameInterval>
+  <minSpeedX>-200</minSpeedX>
+  <speedX>-200</speedX>
+  <speedY>0</speedY>
+  <strategy>rectangular</strategy>
+  <transparency>true</transparency>
+</PaperOrangeL>
+
+<PaperOrangeR>
+  <file>assets/orangePaper.png</file>
+  <interval>900</interval>
+  <distance>400</distance>
+  <imageWidth>36</imageWidth>
+  <imageHeight>20</imageHeight>
+  <frames>6</frames>
+  <startLoc x="220" y="100"/>
+  <frameInterval>100</frameInterval>
   <minSpeedX>200</minSpeedX>
   <speedX>200</speedX>
   <speedY>0</speedY>
   <strategy>rectangular</strategy>
   <transparency>true</transparency>
-</PaperOrange>
+</PaperOrangeR>
 
 <Table>
   <file>assets/table.png</file>
-  <startLoc x="300" y="140"/>
+  <startLoc x="140" y="140"/>
   <frames>1</frames>
   <imageWidth>66</imageWidth>
   <imageHeight>120</imageHeight>

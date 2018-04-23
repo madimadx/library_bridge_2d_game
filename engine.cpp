@@ -16,6 +16,10 @@
 #include "collisionStrategy.h"
 
 Engine::~Engine() {
+  //delete static_cast<ShootingSprite*>(dummies[0])
+  for (ShootingSprite* shooter: shooters) {
+    delete shooter;
+  }
   for (Drawable* dummie: dummies) {
     delete dummie;
   }
@@ -58,12 +62,15 @@ Engine::Engine() :
   Vector2f pos = (player->getPlayer())->getPosition();
   int w = (player->getPlayer())->getScaledWidth();
   int h = (player->getPlayer())->getScaledHeight();
+/*
   for (int i = 0; i < 7; i++) {
     smarties.emplace_back(new SmartSprite("Paper", pos, w, h, float(rand()%350), float(rand()%400)));
     player->attach( smarties[i] );
   }
+  */
   //dummies.emplace_back(new MultiSprite("Paper", float(rand()%350), float(rand()%400)));
-  dummies.emplace_back( new ShootingSprite("OtherStudent") );
+  shooters.emplace_back( new ShootingSprite("OtherStudentR") );
+  shooters.emplace_back( new ShootingSprite("OtherStudentL") );
   dummies.emplace_back( new Sprite("Table") );
 
   strategies.push_back( new RectangularCollisionStrategy );
@@ -85,6 +92,9 @@ void Engine::draw() const {
   world.draw();
   player->draw();
 
+  for (ShootingSprite* shooter: shooters) {
+    shooter->draw();
+  }
   for (const Drawable* dummie : dummies) {
     dummie->draw();
   }
@@ -106,6 +116,7 @@ void Engine::draw() const {
 }
 
 void Engine::checkForCollisions() {
+  /*
   auto it = smarties.begin();
   while ( it != smarties.end() ) {
     if ( strategies[currentStrategy]->execute(*(player->getPlayer()), **it) ) {
@@ -127,6 +138,20 @@ void Engine::checkForCollisions() {
     }
     else ++itr;
   }
+  */
+  auto itr = shooters.begin();
+  while ( itr != shooters.end() ) {
+    auto itrBullet = (*itr)->getBulletList().begin();
+    while (itrBullet != (*itr)->getBulletList().end()) {
+      if ( strategies[currentStrategy]->execute(*(player->getPlayer()), *itrBullet) ) {
+        collision = true;
+        resetDelay();
+        itrBullet = (*itr)->getBulletList().erase(itrBullet);
+      }
+      else ++itrBullet;
+    }
+    ++itr;
+  }
 }
 
 void Engine::resetDelay() {
@@ -142,6 +167,9 @@ void Engine::update(Uint32 ticks) {
   bricks.update();
   world.update();
 
+  for (ShootingSprite* shooter: shooters) {
+    shooter->update(ticks);
+  }
   for (Drawable* dummie : dummies) {
     dummie->update(ticks);
   }
@@ -222,9 +250,6 @@ void Engine::play() {
           IoMod::getInstance().writeText("Paused", 300, 400);
           SDL_RenderPresent(renderer);
           clock.pause();
-        }
-        if ( keystate[SDL_SCANCODE_SPACE] ) {
-          static_cast<ShootingSprite*>(dummies[0])->shoot();
         }
         if (keystate[SDL_SCANCODE_F4] && !makeVideo) {
           std::cout << "Initiating frame capture" << std::endl;

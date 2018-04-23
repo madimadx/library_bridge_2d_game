@@ -32,6 +32,7 @@ private:
   World clouds;
   Viewport& viewport;
 
+  std::vector<ShootingSprite*> shooters;
   std::vector<Drawable*> dummies;
   std::vector<SmartSprite*> smarties;
   Player* player;

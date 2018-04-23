@@ -12,9 +12,11 @@ public:
   virtual void update(Uint32 ticks);
   virtual void draw() const;
   void shoot();
+  std::list<Bullet>& getBulletList() {return bullets;}
 
 private:
   std::string bulletName;
+  Vector2f startPos;
   std::list<Bullet> bullets;
   float minSpeed;
   float bulletInterval;
