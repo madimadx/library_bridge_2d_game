@@ -7,6 +7,7 @@
 #include "sprite.h"
 #include "multisprite.h"
 #include "smartSprite.h"
+#include "shootingSprite.h"
 #include "hud.h"
 #include "gamedata.h"
 #include "engine.h"
@@ -21,7 +22,7 @@ Engine::~Engine() {
   for ( Drawable* smartie : smarties ) {
     delete smartie;
   }
-
+  delete theHud;
   delete player;
 
   for ( CollisionStrategy* strategy : strategies ) {
@@ -61,7 +62,9 @@ Engine::Engine() :
     smarties.emplace_back(new SmartSprite("Paper", pos, w, h, float(rand()%350), float(rand()%400)));
     player->attach( smarties[i] );
   }
-  dummies.emplace_back(new MultiSprite("Paper", float(rand()%350), float(rand()%400)));
+  //dummies.emplace_back(new MultiSprite("Paper", float(rand()%350), float(rand()%400)));
+  dummies.emplace_back( new ShootingSprite("OtherStudent") );
+  dummies.emplace_back( new Sprite("Table") );
 
   strategies.push_back( new RectangularCollisionStrategy );
   strategies.push_back( new PerPixelCollisionStrategy );
@@ -219,6 +222,9 @@ void Engine::play() {
           IoMod::getInstance().writeText("Paused", 300, 400);
           SDL_RenderPresent(renderer);
           clock.pause();
+        }
+        if ( keystate[SDL_SCANCODE_SPACE] ) {
+          static_cast<ShootingSprite*>(dummies[0])->shoot();
         }
         if (keystate[SDL_SCANCODE_F4] && !makeVideo) {
           std::cout << "Initiating frame capture" << std::endl;

@@ -19,7 +19,9 @@ OBJS = \
 	sprite.o \
 	multisprite.o \
 	multisprite2way.o\
+	bullet.o \
 	player.o \
+	shootingSprite.o \
 	smartSprite.o \
 	collisionStrategy.o \
 	hud.o \

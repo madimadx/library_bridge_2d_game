@@ -29,16 +29,10 @@
 </back>
 
 <middle>
-  <file>assets/bridge.png</file>
-  <factor>5</factor>
-  <transparency>true</transparency>
-</middle>
-
-<top>
-  <file>assets/clouds.png</file>
+  <file>assets/bridge2.png</file>
   <factor>1</factor>
   <transparency>true</transparency>
-</top>
+</middle>
 
 <font name="font">
   <file>fonts/arial.ttf</file>
@@ -75,13 +69,19 @@
   <indexPause>19</indexPause>
 </Keys>
 
+<top>
+  <file>assets/clouds.png</file>
+  <factor>.5</factor>
+  <transparency>true</transparency>
+</top>
+
 <Student>
-  <file>assets/student_4frames.png</file>
+  <file>assets/student_standing.png</file>
   <startLoc x="200" y="140"/>
-  <frames>4</frames>
-  <imageWidth>66</imageWidth>
-  <imageHeight>88</imageHeight>
-  <frameInterval>200</frameInterval>
+  <frames>2</frames>
+  <imageWidth>45</imageWidth>
+  <imageHeight>61</imageHeight>
+  <frameInterval>400</frameInterval>
   <speedX>130</speedX>
   <speedY>200</speedY>
   <transparency>true</transparency>
@@ -99,6 +99,46 @@
   <safeDistance>200</safeDistance>
   <transparency>true</transparency>
 </Paper>
+
+<OtherStudent>
+  <file>assets/student_side_2_R.png</file>
+  <bullet>PaperOrange</bullet>
+  <startLoc x="300" y="140"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <frames>2</frames>
+  <imageWidth>45</imageWidth>
+  <imageHeight>61</imageHeight>
+  <frameInterval>400</frameInterval>
+  <transparency>true</transparency>
+</OtherStudent>
+
+<PaperOrange>
+  <file>assets/orangePaper.png</file>
+  <interval>300</interval>
+  <distance>320</distance>
+  <imageWidth>36</imageWidth>
+  <imageHeight>20</imageHeight>
+  <startLoc x="100" y="100"/>
+  <minSpeedX>200</minSpeedX>
+  <speedX>200</speedX>
+  <speedY>0</speedY>
+  <strategy>rectangular</strategy>
+  <transparency>true</transparency>
+</PaperOrange>
+
+<Table>
+  <file>assets/table.png</file>
+  <startLoc x="300" y="140"/>
+  <frames>1</frames>
+  <imageWidth>66</imageWidth>
+  <imageHeight>120</imageHeight>
+  <frameInterval>100</frameInterval>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <safeDistance>200</safeDistance>
+  <transparency>true</transparency>
+</Table>
 
 <Sticky>
   <file>assets/sticky_note.png</file>
