@@ -138,19 +138,21 @@ void Engine::checkForCollisions() {
     else ++itr;
   }
   */
-  auto itr = shooters.begin();
-  while ( itr != shooters.end() ) {
-    auto itrBullet = (*itr)->getBulletList().begin();
-    while (itrBullet != (*itr)->getBulletList().end()) {
-      if ( strategies[currentStrategy]->execute(*(player->getPlayer()), *itrBullet) ) {
-        collision = true;
-        resetDelay();
-        itrBullet = (*itr)->getBulletList().erase(itrBullet);
-        player->deathOn();
+  if (!player->isDeathOn()) {
+    auto itr = shooters.begin();
+    while ( itr != shooters.end() ) {
+      auto itrBullet = (*itr)->getBulletList().begin();
+      while (itrBullet != (*itr)->getBulletList().end()) {
+        if ( strategies[currentStrategy]->execute(*(player->getPlayer()), *itrBullet) ) {
+          collision = true;
+          resetDelay();
+          itrBullet = (*itr)->getBulletList().erase(itrBullet);
+          player->deathOn();
+        }
+        else ++itrBullet;
       }
-      else ++itrBullet;
+      ++itr;
     }
-    ++itr;
   }
 }
 
@@ -200,8 +202,9 @@ void Engine::menu() {
         break;
       }
       */
-      if (event.type == SDL_KEYDOWN)
+      if (event.type == SDL_KEYDOWN) {
         return;
+      }
     }
 
     ticks = clock.getElapsedTicks();
@@ -214,7 +217,7 @@ void Engine::menu() {
   }
 }
 
-void Engine::play() {
+bool Engine::play() {
   SDL_Event event;
   const Uint8* keystate;
   bool done = false;
@@ -222,6 +225,7 @@ void Engine::play() {
   FrameGenerator frameGen;
 
   while ( !done ) {
+    //if (player->deathReset()) return true;
     // The next loop polls for events, guarding against key bounce:
     while ( SDL_PollEvent(&event) ) {
       keystate = SDL_GetKeyboardState(NULL);
@@ -251,6 +255,13 @@ void Engine::play() {
           SDL_RenderPresent(renderer);
           clock.pause();
         }
+        if (keystate[SDL_SCANCODE_R] || player->deathReset()) {
+          return true;
+        }
+        if (keystate[SDL_SCANCODE_M]) {
+          menu();
+          return true;
+        }
         if (keystate[SDL_SCANCODE_F4] && !makeVideo) {
           std::cout << "Initiating frame capture" << std::endl;
           makeVideo = true;
@@ -263,7 +274,6 @@ void Engine::play() {
     }
 
     // In this section of the event loop we allow key bounce:
-
     ticks = clock.getElapsedTicks();
     if ( ticks > 0 ) {
       delayCount++;
@@ -287,4 +297,5 @@ void Engine::play() {
       }
     }
   }
+  return !done;
 }

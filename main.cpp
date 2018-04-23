@@ -5,11 +5,18 @@
 RenderContext* RenderContext::instance = NULL;
 
 int main(int, char*[]) {
+   bool keepPlaying = true;
    try {
-      Engine engine;
-      engine.menu();
-      engine.play();
-      delete RenderContext::getInstance();
+     Engine* engine = new Engine;
+     engine->menu();
+     keepPlaying = engine->play();
+     delete engine;
+     while ( keepPlaying ) {
+       Engine* engine = new Engine;
+       keepPlaying = engine->play();
+       delete engine;
+     }
+     delete RenderContext::getInstance();
    }
    catch (const string& msg) { std::cout << msg << std::endl; }
    catch (...) {

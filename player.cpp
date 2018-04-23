@@ -9,7 +9,9 @@ Player::Player( const std::string& name) :
   initialVelocity(player.getVelocity()),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
+  elapsedFromDeath(0),
   deathDelay(Gamedata::getInstance().getXmlInt(name+"/deathDelay")),
+  death(false),
   observers()
 { }
 
@@ -42,6 +44,10 @@ void Player::deathDraw() const {
   if (elapsedFromDeath % deathDelay > deathDelay/2) {
     player.draw();
   }
+}
+
+bool Player::deathReset() {
+  return (elapsedFromDeath >= deathDelay*4);
 }
 
 void Player::detach( SmartSprite* o ) {

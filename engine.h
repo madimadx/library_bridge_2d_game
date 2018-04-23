@@ -16,7 +16,7 @@ class Engine {
 public:
   Engine ();
   ~Engine ();
-  void play();
+  bool play();
   void menu();
 
   Engine(const Engine&) = delete;

@@ -44,6 +44,7 @@ public:
   void stop();
   void deathOn() {death = true;}
   void deathDraw() const;
+  bool deathReset();
   bool isDeathOn() const {return death;}
 
   Player& operator=(const Player&) = delete;
@@ -53,9 +54,9 @@ private:
   Vector2f initialVelocity;
   int worldWidth;
   int worldHeight;
-  int elapsedFromDeath = 0;
+  int elapsedFromDeath;
   int deathDelay;
-  bool death = false;
+  bool death;
 
 protected:
   std::list<SmartSprite*> observers;
