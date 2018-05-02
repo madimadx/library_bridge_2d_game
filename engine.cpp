@@ -16,6 +16,7 @@
 
 Engine::~Engine() {
   //delete static_cast<ShootingSprite*>(dummies[0])
+  delete sound;
   for (ShootingSprite* shooter: shooters) {
     for (Bullet* bullA : shooter->getBulletListActive())
       delete bullA;
@@ -43,6 +44,7 @@ Engine::Engine() :
   rc( RenderContext::getInstance() ),
   io( IoMod::getInstance() ),
   clock( Clock::getInstance() ),
+  sound(new SDLSound()),
   renderer( rc->getRenderer() ),
   viewport( Viewport::getInstance() ),
   bricks("back", Gamedata::getInstance().getXmlInt("back/factor") ),
@@ -240,6 +242,9 @@ bool Engine::play() {
           int option = menuEngine.getOptionChoice();
           std::cout << "OPTION: " << option << std::endl;
           clock.unpause();
+        }
+        if (keystate[SDL_SCANCODE_SPACE]) {
+          sound->toggleMusic();
         }
         if ( keystate[indexPause] && !hudOn ) {
           IoMod::getInstance().writeText("Paused", 300, 400);

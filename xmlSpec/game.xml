@@ -59,9 +59,14 @@
   <backColor r="72" g="95" b="119" a="255"/>
   <option0>Play</option0>
   <option1>Character Selection</option1>
-  <option2>Help</option2>
+  <option2>Info</option2>
   <spaces>70</spaces>
 </menu>
+
+<option2>
+  <musicCreds>Royalty Free Music: "8 Bit Win!" By HeatleyBros</musicCreds>
+  <musicLink>https://www.youtube.com/watch?v=vX1xq4Ud2z8</musicLink>
+</option2>
 
 <clickOn>
   <file>assets/clickon.png</file>

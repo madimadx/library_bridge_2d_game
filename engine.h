@@ -7,6 +7,7 @@
 #include "viewport.h"
 #include "MenuEngine.h"
 #include "shootingSprite.h"
+#include "sound.h"
 
 class Player;
 class CollisionStrategy;
@@ -27,6 +28,7 @@ private:
   const RenderContext* rc;
   const IoMod& io;
   Clock& clock;
+  SDLSound *sound;
 
   SDL_Renderer * const renderer;
   Viewport& viewport;
