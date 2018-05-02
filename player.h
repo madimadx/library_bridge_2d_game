@@ -14,7 +14,7 @@ public:
   Player(const std::string&);
   Player(const Player&);
 
-  void draw() const { if (!isDeathOn()) player.draw(); else deathDraw();}
+  void draw() const { if (!isDeathOn()) {player.draw(); } else deathDraw();}
   void update(Uint32 ticks);
   const MultiSprite* getPlayer() const { return &player; }
 
@@ -46,10 +46,13 @@ public:
   void deathDraw() const;
   bool deathReset();
   bool isDeathOn() const {return death;}
+  Vector2f getLastPos() {return lastPos;}
+  void goBackPos() {player.setPosition(getLastPos());}
 
   Player& operator=(const Player&) = delete;
 
 private:
+  void updateLastPos() {lastPos = player.getPosition();}
   MultiSprite player;
   Vector2f initialVelocity;
   int worldWidth;
@@ -57,6 +60,7 @@ private:
   int elapsedFromDeath;
   int moveSizeHorz;
   int moveSizeVert;
+  Vector2f lastPos;
   int deathDelay;
   bool death;
 

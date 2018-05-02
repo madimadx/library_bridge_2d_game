@@ -14,6 +14,17 @@ Vector2f Sprite::makeVelocity(int vx, int vy) const {
   return Vector2f(newvx, newvy);
 }
 
+Sprite::Sprite(const std::string& name, Vector2f pos) :
+  Drawable(name, pos,
+           Vector2f(
+                    Gamedata::getInstance().getXmlInt(name+"/speedX"),
+                    Gamedata::getInstance().getXmlInt(name+"/speedY"))
+           ),
+  image( RenderContext::getInstance()->getImage(name) ),
+  worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
+  worldHeight(Gamedata::getInstance().getXmlInt("world/height"))
+{ }
+
 Sprite::Sprite(const string& n, const Vector2f& pos, const Vector2f& vel,
                const Image* img):
   Drawable(n, pos, vel),

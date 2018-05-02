@@ -17,6 +17,7 @@ Player::Player( const std::string& name) :
   observers()
 {
   stop();
+  lastPos = player.getPosition();
 }
 
 void Player::stop() {
@@ -24,22 +25,26 @@ void Player::stop() {
 }
 
 void Player::right() {
+  lastPos = player.getPosition();
   if ( player.getX() < worldWidth-getScaledWidth() - (moveSizeHorz)) {
     player.setPositionX(getX() + moveSizeHorz);
   }
 }
 void Player::left()  {
   if ( player.getX() > moveSizeHorz) {
+    lastPos = player.getPosition();
     player.setPositionX(getX() - moveSizeHorz);
   }
 }
 void Player::up()    {
   if ( player.getY() > moveSizeVert) {
+    lastPos = player.getPosition();
     player.setPositionY(getY() - moveSizeVert);
   }
 }
 void Player::down()  {
   if ( player.getY() < worldHeight-getScaledHeight() - moveSizeVert) {
+    lastPos = player.getPosition();
     player.setPositionY(getY() + moveSizeVert);
   }
 }

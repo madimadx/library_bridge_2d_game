@@ -8,7 +8,7 @@ Menu::Menu(SDL_Renderer* rend) :
   io( IoMod::getInstance() ),
   width(gdata.getXmlInt("world/width")),
   height(gdata.getXmlInt("world/height")),
-  background("back"),
+  background("orgScreen"),
   options(),
   optionLoc( { gdata.getXmlInt("menu/optionLoc/x"),
                gdata.getXmlInt("menu/optionLoc/y")}
@@ -146,7 +146,7 @@ int Menu::getNumStars() const {
 
 void Menu::draw() const {
   drawBackground();
-  io.writeText("Options Menu", 350, 60);
+  io.writeText("Options Menu",150, 60);
   int space = spaces;
   for ( const std::string& option : options ) {
     io.writeText(option, optionLoc[0], optionLoc[1]+space);

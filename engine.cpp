@@ -31,6 +31,7 @@ Engine::~Engine() {
     delete smartie;
   }
   delete theHud;
+  delete endBox;
   delete player;
 
   for ( CollisionStrategy* strategy : strategies ) {
@@ -54,6 +55,7 @@ Engine::Engine() :
   dummies(),
   smarties(),
   player(new Player("Student")),
+  endBox(new Sprite("endBox")),
   strategies(),
   theHud(new Hud("Sticky")),
   currentStrategy(0),
@@ -77,9 +79,7 @@ Engine::Engine() :
   }
   */
   //dummies.emplace_back(new MultiSprite("Paper", float(rand()%350), float(rand()%400)));
-  shooters.emplace_back( new ShootingSprite("OtherStudentR") );
-  shooters.emplace_back( new ShootingSprite("OtherStudentL") );
-  dummies.emplace_back( new Sprite("Table") );
+  populateEnemies();
 
   strategies.push_back( new RectangularCollisionStrategy );
   strategies.push_back( new PerPixelCollisionStrategy );
@@ -90,16 +90,17 @@ Engine::Engine() :
   std::cout << "Loading complete" << std::endl;
 }
 
-void Engine::drawMenu() const {
-  bricks.draw();
-  IoMod::getInstance().writeText("Press any key to begin", 220, 110);
-  SDL_RenderPresent(renderer);
+void Engine::populateEnemies() {
+  shooters.emplace_back( new ShootingSprite("OtherStudentR") );
+  shooters.emplace_back( new ShootingSprite("OtherStudentL") );
+  dummies.emplace_back( new Sprite("Table") );
 }
 
 void Engine::draw() const {
   viewport.update();
   bricks.draw();
   world.draw();
+  //endBox->draw();
   //std::cout << player->getX() << " " <<  player->getY() << std::endl;
   player->draw();
   int active = 0, inactive = 0;
@@ -155,8 +156,36 @@ void Engine::checkForCollisions() {
       }
       ++itr;
     }
+    if (strategies[currentStrategy]->execute(*(player->getPlayer()), *endBox)) {
+      IoMod::getInstance().writeText("WINNER", 250, 400);
+      //std::cout << "endGame" << std::endl;
+      GAMEWON();
+    }
   }
 }
+
+bool Engine::checkCollisionsWithBarriers() {
+  if (!player->isDeathOn()) {
+    auto itr = dummies.begin();
+    if ( strategies[currentStrategy]->execute(*(player->getPlayer()), **itr) ) {
+      (*sound)[0];
+      std::cout << "norm collision" << std::endl;
+      return true;
+      //resetDelay();
+    }
+    else ++itr;
+    auto itr2 = shooters.begin();
+    if ( strategies[currentStrategy]->execute(*(player->getPlayer()), **itr) ) {
+      (*sound)[0];
+      std::cout << "norm collision" << std::endl;
+      return true;
+      //resetDelay();
+    }
+    else ++itr2;
+  }
+  return false;
+}
+
 
 void Engine::resetDelay() {
   delayCount = 0;
@@ -187,32 +216,7 @@ void Engine::update(Uint32 ticks) {
   //std::cout << clouds.getX() << " " <<  clouds.getY() << std::endl;
   //viewport.drawFPS(clock.getFps());
   viewport.update(); // always update viewport last
-}
 
-void Engine::menu() {
-  SDL_Event event;
-  const Uint8* keystate;
-  bool done = false;
-  Uint32 ticks = clock.getElapsedTicks();
-  FrameGenerator frameGen;
-  //menuEngine.play();
-
-  while (!done) {
-    while (SDL_PollEvent(&event)) {
-      keystate = SDL_GetKeyboardState(NULL);
-      if (event.type == SDL_KEYDOWN) {
-        return;
-      }
-    }
-
-    ticks = clock.getElapsedTicks();
-    if ( ticks > 0 ) {
-      delayCount++;
-      clock.incrFrame();
-      drawMenu();
-      //update(ticks);
-    }
-  }
 }
 
 void Engine::playMenu() {
@@ -231,6 +235,8 @@ bool Engine::play() {
     //std::cout << viewport.getX() << " " <<  viewport.getY() << std::endl;
     //if (player->deathReset()) return true;
     // The next loop polls for events, guarding against key bounce:
+    if (gameWon)
+      return true;
     while ( SDL_PollEvent(&event) ) {
       keystate = SDL_GetKeyboardState(NULL);
       if (event.type ==  SDL_QUIT) { done = true; break; }
@@ -272,10 +278,7 @@ bool Engine::play() {
         if (keystate[SDL_SCANCODE_R]) {
           return true;
         }
-        if (keystate[SDL_SCANCODE_M]) {
-          menu();
-          return true;
-        }
+
         if (keystate[SDL_SCANCODE_F4] && !makeVideo) {
           std::cout << "Initiating frame capture" << std::endl;
           makeVideo = true;
@@ -286,15 +289,23 @@ bool Engine::play() {
         }
         if (keystate[indexL]) {
           static_cast<Player*>(player)->left();
+          //if (checkCollisionsWithBarriers())
+          //  static_cast<Player*>(player)->goBackPos();
         }
         if (keystate[indexR]) {
           static_cast<Player*>(player)->right();
+          //if (checkCollisionsWithBarriers())
+          //  static_cast<Player*>(player)->goBackPos();
         }
         if (keystate[indexUp]) {
           static_cast<Player*>(player)->up();
+          //if (checkCollisionsWithBarriers())
+//static_cast<Player*>(player)->goBackPos();
         }
         if (keystate[indexDown]) {
           static_cast<Player*>(player)->down();
+          //if (checkCollisionsWithBarriers())
+          //  static_cast<Player*>(player)->goBackPos();
         }
       }
     }

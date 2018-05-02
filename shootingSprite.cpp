@@ -13,6 +13,17 @@ ShootingSprite::ShootingSprite(const std::string& name) :
   timeSinceLastFrame(0)
 { }
 
+ShootingSprite::ShootingSprite(const std::string& name, Vector2f pos) :
+  Sprite(name),
+  bulletName( Gamedata::getInstance().getXmlStr(name+"/bullet") ),
+  startPos(pos),
+  active(),
+  inactive(),
+  minSpeed( Gamedata::getInstance().getXmlInt(bulletName+"/speedX") ),
+  bulletInterval(Gamedata::getInstance().getXmlInt(bulletName+"/interval")),
+  timeSinceLastFrame(0)
+{ }
+
 ShootingSprite::ShootingSprite(const ShootingSprite& s) :
   Sprite(s),
   bulletName(s.bulletName),

@@ -19,10 +19,10 @@ public:
   Engine ();
   ~Engine ();
   bool play();
-  void menu();
 
   Engine(const Engine&) = delete;
   Engine& operator=(const Engine&) = delete;
+  void GAMEWON() {gameWon = true;}
 
 private:
   const RenderContext* rc;
@@ -31,16 +31,19 @@ private:
   SDLSound *sound;
 
   SDL_Renderer * const renderer;
+  void populateEnemies();
   Viewport& viewport;
   World bricks;
   World world;
   World clouds;
   MenuEngine menuEngine;
+  bool gameWon = false;
 
   std::vector<ShootingSprite*> shooters;
   std::vector<Drawable*> dummies;
   std::vector<SmartSprite*> smarties;
   Player* player;
+  Sprite* endBox;
   std::vector<CollisionStrategy*> strategies;
   Hud* theHud;
   int currentStrategy;
@@ -59,7 +62,7 @@ private:
   bool makeVideo;
 
   bool godMode = false;
-  void drawMenu() const;
+  //void GAMEWON();
   void playMenu();
   void resetDelay();
   void draw() const;
@@ -67,4 +70,5 @@ private:
 
   void printScales() const;
   void checkForCollisions();
+  bool checkCollisionsWithBarriers();
 };

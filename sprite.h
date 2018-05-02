@@ -6,6 +6,7 @@
 class Sprite : public Drawable {
 public:
   Sprite(const std::string&);
+  Sprite(const std::string&, Vector2f pos);
   Sprite(const std::string&, const Vector2f& pos, const Vector2f& vel,
          const Image*);
   Sprite(const std::string& name, const Vector2f& pos, const Vector2f& vel);

@@ -19,7 +19,7 @@
 
 <world>
   <width>720</width>
-  <height>1500</height>
+  <height>3000</height>
 </world>
 
 <back>
@@ -54,7 +54,7 @@
   <noOfOptions>4</noOfOptions>
   <loc x="0" y="0"/>
   <msg x="30" y="60"/>
-  <optionLoc x="400" y="100" />
+  <optionLoc x="150" y="100" />
   <color r="193" g="205" b="205" a="255"/>
   <backColor r="72" g="95" b="119" a="255"/>
   <option0>Play Regular</option0>
@@ -119,7 +119,7 @@
 
 <Student>
   <file>assets/student_standing.png</file>
-  <startLoc x="338" y="1400"/>
+  <startLoc x="338" y="2900"/>
   <frames>2</frames>
   <deathDelay>400</deathDelay>
   <imageWidth>45</imageWidth>
@@ -217,6 +217,30 @@
   <safeDistance>200</safeDistance>
   <transparency>true</transparency>
 </Table>
+
+<endBox>
+  <file>assets/end.png</file>
+  <startLoc x="0" y="0"/>
+  <frames>1</frames>
+  <imageWidth>720</imageWidth>
+  <imageHeight>200</imageHeight>
+  <frameInterval>100</frameInterval>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</endBox>
+
+<orgScreen>
+  <file>assets/orangeScreen.png</file>
+  <startLoc x="0" y="0"/>
+  <frames>1</frames>
+  <imageWidth>720</imageWidth>
+  <imageHeight>960</imageHeight>
+  <frameInterval>100</frameInterval>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</orgScreen>
 
 <Sticky>
   <file>assets/sticky_note.png</file>

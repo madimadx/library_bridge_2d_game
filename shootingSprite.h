@@ -7,6 +7,7 @@
 class ShootingSprite : public Sprite {
 public:
   ShootingSprite(const std::string& n);
+  ShootingSprite(const std::string& n, Vector2f pos);
   ShootingSprite(const ShootingSprite& s);
 
   virtual void update(Uint32 ticks);
