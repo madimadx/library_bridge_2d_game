@@ -138,7 +138,7 @@ void Engine::draw() const {
 }
 
 void Engine::checkForCollisions() {
-  if (!player->isDeathOn()) {
+  if (!player->isDeathOn() && !godMode) {
     auto itr = shooters.begin();
     while ( itr != shooters.end() ) {
       auto itrBullet = (*itr)->getBulletListActive().begin();
@@ -214,7 +214,7 @@ void Engine::menu() {
 }
 
 void Engine::playMenu() {
-  menuEngine.play(viewport.getX(), viewport.getY());
+  godMode = menuEngine.play(viewport.getX(), viewport.getY());
 }
 
 bool Engine::play() {
@@ -239,7 +239,7 @@ bool Engine::play() {
         }
         if ( keystate[SDL_SCANCODE_M] || keystate[SDL_SCANCODE_O] ) {
           clock.pause();
-          menuEngine.play(viewport.getX(), viewport.getY());
+          godMode = menuEngine.play(viewport.getX(), viewport.getY());
           int option = menuEngine.getOptionChoice();
           std::cout << "OPTION: " << option << std::endl;
           clock.unpause();

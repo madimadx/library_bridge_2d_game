@@ -39,7 +39,7 @@ void MenuEngine::updatePos(float xPos, float yPos) {
   menu.updatePosMenu(xPos, yPos);
 }
 
-void MenuEngine::play(float xPos, float yPos) {
+bool MenuEngine::play(float xPos, float yPos) {
   SDL_Event event;
   const Uint8* keystate;
   bool done = false;
@@ -61,7 +61,8 @@ void MenuEngine::play(float xPos, float yPos) {
           menu.lightOn();
           optionChoice = menu.getOptionNo();
           if ( optionChoice == 0 ) done = true;
-          if ( optionChoice == 1 ) {
+          if ( optionChoice == 1 ) return true;
+          if ( optionChoice == 2 ) {
             starsOption = true;
             numStars = menu.getNumStars();
             //std::cout << "No is: " << numStars << std::endl;
@@ -76,4 +77,5 @@ void MenuEngine::play(float xPos, float yPos) {
     draw();
     //update(ticks);
   }
+  return false;
 }

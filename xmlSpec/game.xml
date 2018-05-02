@@ -51,22 +51,23 @@
 <menu>
   <width>720</width>
   <height>960</height>
-  <noOfOptions>3</noOfOptions>
+  <noOfOptions>4</noOfOptions>
   <loc x="0" y="0"/>
   <msg x="30" y="60"/>
   <optionLoc x="400" y="100" />
   <color r="193" g="205" b="205" a="255"/>
   <backColor r="72" g="95" b="119" a="255"/>
-  <option0>Play</option0>
-  <option1>Character Selection</option1>
-  <option2>Info</option2>
+  <option0>Play Regular</option0>
+  <option1>Play God</option1>
+  <option2>Character Selection</option2>
+  <option3>Info</option3>
   <spaces>70</spaces>
 </menu>
 
-<option2>
+<option3>
   <musicCreds>Royalty Free Music: "8 Bit Win!" By HeatleyBros</musicCreds>
   <musicLink>https://www.youtube.com/watch?v=vX1xq4Ud2z8</musicLink>
-</option2>
+</option3>
 
 <clickOn>
   <file>assets/clickon.png</file>

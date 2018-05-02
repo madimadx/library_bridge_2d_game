@@ -58,6 +58,7 @@ private:
 
   bool makeVideo;
 
+  bool godMode = false;
   void drawMenu() const;
   void playMenu();
   void resetDelay();
