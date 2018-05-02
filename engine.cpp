@@ -145,6 +145,7 @@ void Engine::checkForCollisions() {
       while (itrBullet != (*itr)->getBulletListActive().end()) {
         if ( strategies[currentStrategy]->execute(*(player->getPlayer()), **itrBullet) ) {
           collision = true;
+          (*sound)[0];
           resetDelay();
           itrBullet = (*itr)->getBulletListActive().erase(itrBullet);
           player->deathOn();

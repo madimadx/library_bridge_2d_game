@@ -39,16 +39,17 @@ SDLSound::SDLSound() :
 
   startMusic();
 
-/*
-  sounds.push_back( Mix_LoadWAV("sound/Boom.wav") );
+
+  sounds.push_back( Mix_LoadWAV("sound/pew.wav") );
+  /*
   sounds.push_back( Mix_LoadWAV("sound/Gun.wav") );
   sounds.push_back( Mix_LoadWAV("sound/Thump.wav") );
   sounds.push_back( Mix_LoadWAV("sound/phaser.wav") );
   sounds.push_back( Mix_LoadWAV("sound/Putt1.wav") );
   sounds.push_back( Mix_LoadWAV("sound/explosion.wav") );
   sounds.push_back( Mix_LoadWAV("sound/cannon.wav") );
-  sounds.push_back( Mix_LoadWAV("sound/Larc.wav") );
-  for (unsigned int i = 0; i < sounds.size(); ++i) channels.push_back(i);*/
+  sounds.push_back( Mix_LoadWAV("sound/Larc.wav") );*/
+  for (unsigned int i = 0; i < sounds.size(); ++i) channels.push_back(i);
   std::cout << "Music and Sound is loaded" << std::endl;
 }
 
@@ -65,6 +66,7 @@ void SDLSound::operator[](int index) {
   if (currentSound >= 0) Mix_HaltChannel(currentSound);
   currentSound = index;
   Mix_VolumeChunk(sounds[index], volume);
+  std::cout << "should pew" << std::endl;
   channels[index] =
      Mix_PlayChannel(-1, sounds[index], 0);
 }
