@@ -26,6 +26,7 @@ private:
   int worldHeight;
   int viewWidth;
   int viewHeight;
+
   int objWidth;
   int objHeight;
   SDL_Color altColor;

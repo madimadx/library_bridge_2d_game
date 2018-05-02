@@ -44,11 +44,11 @@ Engine::Engine() :
   io( IoMod::getInstance() ),
   clock( Clock::getInstance() ),
   renderer( rc->getRenderer() ),
+  viewport( Viewport::getInstance() ),
   bricks("back", Gamedata::getInstance().getXmlInt("back/factor") ),
   world("middle", Gamedata::getInstance().getXmlInt("middle/factor") ),
   clouds("top", Gamedata::getInstance().getXmlInt("top/factor") ),
   menuEngine(),
-  viewport( Viewport::getInstance() ),
   dummies(),
   smarties(),
   player(new Player("Student")),
@@ -81,7 +81,7 @@ Engine::Engine() :
   strategies.push_back( new PerPixelCollisionStrategy );
   strategies.push_back( new MidPointCollisionStrategy );
 
-  Viewport::getInstance().setObjectToTrack(player->getPlayer());
+  viewport.setObjectToTrack(player->getPlayer());
   std::cout << "Loading complete" << std::endl;
 }
 
@@ -125,7 +125,6 @@ void Engine::draw() const {
   strategies[currentStrategy]->draw();
   if ( collision )
     IoMod::getInstance().writeText("Oops: Collision", 30, 110);
-
 
   viewport.draw();
   //viewport.drawFPS(clock.getFps());
@@ -227,7 +226,7 @@ bool Engine::play() {
         }
         if ( keystate[SDL_SCANCODE_M] || keystate[SDL_SCANCODE_O] ) {
           clock.pause();
-          menuEngine.play();
+          menuEngine.play(viewport.getX(), viewport.getY());
           int option = menuEngine.getOptionChoice();
           std::cout << "OPTION: " << option << std::endl;
           clock.unpause();

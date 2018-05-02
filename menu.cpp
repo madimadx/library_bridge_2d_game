@@ -51,6 +51,10 @@ void Menu::decrIcon() {
   else --currentOption;
 }
 
+void Menu::updatePosMenu(float xPos, float yPos) {
+  background.setPosition(Vector2f(xPos, yPos));
+}
+
 void Menu::drawBackground() const {
   background.draw();
   /*

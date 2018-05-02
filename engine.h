@@ -29,11 +29,11 @@ private:
   Clock& clock;
 
   SDL_Renderer * const renderer;
+  Viewport& viewport;
   World bricks;
   World world;
   World clouds;
   MenuEngine menuEngine;
-  Viewport& viewport;
 
   std::vector<ShootingSprite*> shooters;
   std::vector<Drawable*> dummies;

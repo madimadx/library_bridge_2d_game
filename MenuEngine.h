@@ -6,7 +6,7 @@ class MenuEngine {
 public:
   MenuEngine ();
   ~MenuEngine ();
-  void play();
+  void play(float, float);
   int getOptionChoice() const { return optionChoice; }
   bool starsOptionChosen();
   int getNumStars() const { return numStars; }
@@ -21,6 +21,7 @@ private:
 
   void draw() const;
   void update(Uint32);
+  void updatePos(float, float);
 
   MenuEngine(const MenuEngine&);
   MenuEngine& operator=(const MenuEngine&);

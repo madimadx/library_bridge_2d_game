@@ -4,7 +4,7 @@
 #include <string>
 #include "sprite.h"
 #include "gamedata.h"
-#include "menuEngine.h"
+#include "MenuEngine.h"
 #include "renderContext.h"
 
 MenuEngine::~MenuEngine() { }
@@ -35,10 +35,15 @@ bool MenuEngine::starsOptionChosen() {
 void MenuEngine::update(Uint32) {
 }
 
-void MenuEngine::play() {
+void MenuEngine::updatePos(float xPos, float yPos) {
+  menu.updatePosMenu(xPos, yPos);
+}
+
+void MenuEngine::play(float xPos, float yPos) {
   SDL_Event event;
   const Uint8* keystate;
   bool done = false;
+  updatePos(xPos, yPos);
 
   while ( !done ) {
     // The next loop polls for events, guarding against key bounce:

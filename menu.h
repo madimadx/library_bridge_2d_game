@@ -16,6 +16,7 @@ public:
   void decrIcon();
   void lightOn()  { currentClick = 1; }
   void lightOff() { currentClick = 0; }
+  void updatePosMenu(float, float);
 
   int getOptionNo() const { return currentOption; }
   int getNumStars() const;

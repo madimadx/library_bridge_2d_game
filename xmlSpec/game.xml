@@ -26,7 +26,7 @@
   <file>assets/brick.png</file>
   <factor>3</factor>
   <transparency>true</transparency>
-  <startLoc x="0" y="400"/>
+  <startLoc x="0" y="0"/>
   <frameInterval>100</frameInterval>
   <frames>1</frames>
   <speedX>0</speedX>
