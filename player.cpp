@@ -13,7 +13,9 @@ Player::Player( const std::string& name) :
   deathDelay(Gamedata::getInstance().getXmlInt(name+"/deathDelay")),
   death(false),
   observers()
-{ }
+{
+  stop();
+}
 
 void Player::stop() {
   player.setVelocity( Vector2f(0, 0) );

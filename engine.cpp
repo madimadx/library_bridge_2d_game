@@ -62,7 +62,9 @@ Engine::Engine() :
   makeVideo( false )
 {
   srand(time(NULL));
-
+  std::cout << viewport.getX() << " " <<  viewport.getY() << std::endl;
+  //std::cout << clouds.getX() << " " <<  clouds.getY() << std::endl;
+  //std::cout << player->getX() << " " <<  player->getY() << std::endl;
   //Vector2f pos = (player->getPlayer())->getPosition();
   //int w = (player->getPlayer())->getScaledWidth();
   //int h = (player->getPlayer())->getScaledHeight();
@@ -82,6 +84,7 @@ Engine::Engine() :
   strategies.push_back( new MidPointCollisionStrategy );
 
   viewport.setObjectToTrack(player->getPlayer());
+  playMenu();
   std::cout << "Loading complete" << std::endl;
 }
 
@@ -94,6 +97,7 @@ void Engine::drawMenu() const {
 void Engine::draw() const {
   bricks.draw();
   world.draw();
+  //std::cout << player->getX() << " " <<  player->getY() << std::endl;
   player->draw();
   int active = 0, inactive = 0;
   std::stringstream strmAct, strmInact;
@@ -175,6 +179,7 @@ void Engine::update(Uint32 ticks) {
   player->update(ticks);
   theHud->update(viewport.getX(), viewport.getY());
   clouds.update();
+  //std::cout << clouds.getX() << " " <<  clouds.getY() << std::endl;
   //viewport.drawFPS(clock.getFps());
   viewport.update(); // always update viewport last
 }
@@ -205,15 +210,20 @@ void Engine::menu() {
   }
 }
 
+void Engine::playMenu() {
+  menuEngine.play(viewport.getX(), viewport.getY());
+}
+
 bool Engine::play() {
   SDL_Event event;
   const Uint8* keystate;
   bool done = false;
   Uint32 ticks = clock.getElapsedTicks();
   FrameGenerator frameGen;
-  //menuEngine.play();
 
   while ( !done ) {
+    //std::cout << player->getX() << " " <<  player->getY() << std::endl;
+    //std::cout << viewport.getX() << " " <<  viewport.getY() << std::endl;
     //if (player->deathReset()) return true;
     // The next loop polls for events, guarding against key bounce:
     while ( SDL_PollEvent(&event) ) {

@@ -57,6 +57,7 @@ private:
   bool makeVideo;
 
   void drawMenu() const;
+  void playMenu();
   void resetDelay();
   void draw() const;
   void update(Uint32);

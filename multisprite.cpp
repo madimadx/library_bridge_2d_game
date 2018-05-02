@@ -72,10 +72,13 @@ void MultiSprite::draw() const {
 }
 
 void MultiSprite::update(Uint32 ticks) {
+	//std::cout << getX() << " 1 " <<  getY() << std::endl;
   advanceFrame(ticks);
+	//std::cout << getX() << " 2 " <<  getY() << std::endl;
 
   Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
   setPosition(getPosition() + incr);
+	//std::cout << getX() << " 3 " <<  getY() << std::endl;
 
   if ( getY() < 0) {
     setVelocityY( fabs( getVelocityY() ) );
