@@ -24,6 +24,8 @@ OBJS = \
 	shootingSprite.o \
 	smartSprite.o \
 	collisionStrategy.o \
+	menu.o \
+	MenuEngine.o \
 	hud.o \
 	vector2f.o \
 	clock.o \

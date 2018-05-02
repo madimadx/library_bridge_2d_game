@@ -26,6 +26,11 @@
   <file>assets/brick.png</file>
   <factor>3</factor>
   <transparency>true</transparency>
+  <startLoc x="0" y="400"/>
+  <frameInterval>100</frameInterval>
+  <frames>1</frames>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
 </back>
 
 <middle>
@@ -42,6 +47,37 @@
   <blue>255</blue>
   <alpha>0</alpha>
 </font>
+
+<menu>
+  <width>720</width>
+  <height>960</height>
+  <noOfOptions>3</noOfOptions>
+  <loc x="0" y="0"/>
+  <msg x="30" y="60"/>
+  <optionLoc x="400" y="100" />
+  <color r="193" g="205" b="205" a="255"/>
+  <backColor r="72" g="95" b="119" a="255"/>
+  <option0>Play</option0>
+  <option1>Character Selection</option1>
+  <option2>Help</option2>
+  <spaces>70</spaces>
+</menu>
+
+<clickOn>
+  <file>assets/clickon.png</file>
+  <startLoc x="340" y="170"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</clickOn>
+
+<clickOff>
+  <file>assets/clickoff.png</file>
+  <startLoc x="340" y="170"/>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
+  <transparency>true</transparency>
+</clickOff>
 
 <altColor>
   <r>0</r>

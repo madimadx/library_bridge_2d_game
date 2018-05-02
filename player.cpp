@@ -47,7 +47,11 @@ void Player::deathDraw() const {
 }
 
 bool Player::deathReset() {
-  return (elapsedFromDeath >= deathDelay*4);
+  if (elapsedFromDeath >= deathDelay*4) {
+    death = false;
+    return true;
+  }
+  return false;
 }
 
 void Player::detach( SmartSprite* o ) {

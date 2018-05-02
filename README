@@ -4,18 +4,12 @@ Course: CPSC 4160
 
 Clemson Email Address: mmaddox@clemson.edu
 
-Project no: 4
+Project no: 5
 
-Project due date: 04/09/2018
+Project due date: 04/23/2018
 
 Project description:
 
-I would like to modify player movement so it's not smooth but at intervals, like hopping.
-I will limit movement to just in the bridge. For levels, I'd like to imitate frogger in that each
-level has more obstacles and gets quicker. The end will be some certain number of levels, perhaps 10.
+This project implemented an object pool, bullets, and collision animations.
 
-The player will have 3 lives. They respawn where they die until they run out of lives and then have to start from the beginning.
-
-I will add more sprites and variety in them and they will be placed along the bridge.
-
-Score is based on how far they go in the game.
+I still have a long way to go on the graphics and player movement.

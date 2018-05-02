@@ -8,7 +8,7 @@ int main(int, char*[]) {
    bool keepPlaying = true;
    try {
      Engine* engine = new Engine;
-     engine->menu();
+     //engine->menu();
      keepPlaying = engine->play();
      delete engine;
      while ( keepPlaying ) {

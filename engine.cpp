@@ -17,6 +17,10 @@
 Engine::~Engine() {
   //delete static_cast<ShootingSprite*>(dummies[0])
   for (ShootingSprite* shooter: shooters) {
+    for (Bullet* bullA : shooter->getBulletListActive())
+      delete bullA;
+    for (Bullet* bullI : shooter->getBulletListInactive())
+      delete bullI;
     delete shooter;
   }
   for (Drawable* dummie: dummies) {
@@ -43,6 +47,7 @@ Engine::Engine() :
   bricks("back", Gamedata::getInstance().getXmlInt("back/factor") ),
   world("middle", Gamedata::getInstance().getXmlInt("middle/factor") ),
   clouds("top", Gamedata::getInstance().getXmlInt("top/factor") ),
+  menuEngine(),
   viewport( Viewport::getInstance() ),
   dummies(),
   smarties(),
@@ -58,9 +63,9 @@ Engine::Engine() :
 {
   srand(time(NULL));
 
-  Vector2f pos = (player->getPlayer())->getPosition();
-  int w = (player->getPlayer())->getScaledWidth();
-  int h = (player->getPlayer())->getScaledHeight();
+  //Vector2f pos = (player->getPlayer())->getPosition();
+  //int w = (player->getPlayer())->getScaledWidth();
+  //int h = (player->getPlayer())->getScaledHeight();
 /*
   for (int i = 0; i < 7; i++) {
     smarties.emplace_back(new SmartSprite("Paper", pos, w, h, float(rand()%350), float(rand()%400)));
@@ -90,10 +95,20 @@ void Engine::draw() const {
   bricks.draw();
   world.draw();
   player->draw();
+  int active = 0, inactive = 0;
+  std::stringstream strmAct, strmInact;
 
   for (ShootingSprite* shooter: shooters) {
     shooter->draw();
+    active += shooter->getNumActive();
+    inactive += shooter->getNumInactive();
   }
+  strmAct << active;
+  strmInact << inactive;
+  string strAct, strInact;
+  strmAct >> strAct;
+  strmInact >> strInact;
+
   for (const Drawable* dummie : dummies) {
     dummie->draw();
   }
@@ -103,7 +118,10 @@ void Engine::draw() const {
 
   clouds.draw();
 
+  if (player->isDeathOn()) IoMod::getInstance().writeText("Press any key to reset", 240, 400);
   IoMod::getInstance().writeText("Press m to change strategy", 30, 30);
+  IoMod::getInstance().writeText("Active: " + strAct, 30, 140);
+  IoMod::getInstance().writeText("Inactive: " + strInact, 30, 170);
   strategies[currentStrategy]->draw();
   if ( collision )
     IoMod::getInstance().writeText("Oops: Collision", 30, 110);
@@ -115,38 +133,15 @@ void Engine::draw() const {
 }
 
 void Engine::checkForCollisions() {
-  /*
-  auto it = smarties.begin();
-  while ( it != smarties.end() ) {
-    if ( strategies[currentStrategy]->execute(*(player->getPlayer()), **it) ) {
-      SmartSprite* doa = *it;
-      player->detach(doa);
-      delete doa;
-      collision = true;
-      resetDelay();
-      it = smarties.erase(it);
-    }
-    else ++it;
-  }
-  auto itr = dummies.begin();
-  while ( itr != dummies.end() ) {
-    if ( strategies[currentStrategy]->execute(*(player->getPlayer()), **itr) ) {
-      collision = true;
-      resetDelay();
-      itr = dummies.erase(itr);
-    }
-    else ++itr;
-  }
-  */
   if (!player->isDeathOn()) {
     auto itr = shooters.begin();
     while ( itr != shooters.end() ) {
-      auto itrBullet = (*itr)->getBulletList().begin();
-      while (itrBullet != (*itr)->getBulletList().end()) {
-        if ( strategies[currentStrategy]->execute(*(player->getPlayer()), *itrBullet) ) {
+      auto itrBullet = (*itr)->getBulletListActive().begin();
+      while (itrBullet != (*itr)->getBulletListActive().end()) {
+        if ( strategies[currentStrategy]->execute(*(player->getPlayer()), **itrBullet) ) {
           collision = true;
           resetDelay();
-          itrBullet = (*itr)->getBulletList().erase(itrBullet);
+          itrBullet = (*itr)->getBulletListActive().erase(itrBullet);
           player->deathOn();
         }
         else ++itrBullet;
@@ -191,17 +186,11 @@ void Engine::menu() {
   bool done = false;
   Uint32 ticks = clock.getElapsedTicks();
   FrameGenerator frameGen;
+  //menuEngine.play();
 
   while (!done) {
     while (SDL_PollEvent(&event)) {
       keystate = SDL_GetKeyboardState(NULL);
-      /*
-      if (event.type ==  SDL_QUIT) { done = true; break; }
-      if (keystate[SDL_SCANCODE_ESCAPE] || keystate[SDL_SCANCODE_Q]) {
-        done = true;
-        break;
-      }
-      */
       if (event.type == SDL_KEYDOWN) {
         return;
       }
@@ -223,6 +212,7 @@ bool Engine::play() {
   bool done = false;
   Uint32 ticks = clock.getElapsedTicks();
   FrameGenerator frameGen;
+  //menuEngine.play();
 
   while ( !done ) {
     //if (player->deathReset()) return true;
@@ -234,6 +224,13 @@ bool Engine::play() {
         if (keystate[SDL_SCANCODE_ESCAPE] || keystate[SDL_SCANCODE_Q]) {
           done = true;
           break;
+        }
+        if ( keystate[SDL_SCANCODE_M] || keystate[SDL_SCANCODE_O] ) {
+          clock.pause();
+          menuEngine.play();
+          int option = menuEngine.getOptionChoice();
+          std::cout << "OPTION: " << option << std::endl;
+          clock.unpause();
         }
         if ( keystate[indexPause] && !hudOn ) {
           IoMod::getInstance().writeText("Paused", 300, 400);
@@ -255,7 +252,7 @@ bool Engine::play() {
           SDL_RenderPresent(renderer);
           clock.pause();
         }
-        if (keystate[SDL_SCANCODE_R] || player->deathReset()) {
+        if (keystate[SDL_SCANCODE_R]) {
           return true;
         }
         if (keystate[SDL_SCANCODE_M]) {

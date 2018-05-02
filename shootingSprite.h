@@ -10,14 +10,18 @@ public:
   ShootingSprite(const ShootingSprite& s);
 
   virtual void update(Uint32 ticks);
-  virtual void draw() const;
+  virtual void draw();
   void shoot();
-  std::list<Bullet>& getBulletList() {return bullets;}
+  int getNumActive() {return active.size();}
+  int getNumInactive() {return inactive.size();}
+  std::list<Bullet*>& getBulletListActive() {return active;}
+  std::list<Bullet*>& getBulletListInactive() {return inactive;}
 
 private:
   std::string bulletName;
   Vector2f startPos;
-  std::list<Bullet> bullets;
+  std::list<Bullet*> active;
+  std::list<Bullet*> inactive;
   float minSpeed;
   float bulletInterval;
   float timeSinceLastFrame;
