@@ -43,6 +43,8 @@ public:
   void  setVelocity(const Vector2f& vel) { velocity = vel;  }
   const Vector2f& getPosition() const    { return position; }
   void  setPosition(const Vector2f& pos) { position = pos;  }
+  void  setPositionX(float px) { position[0] = px;   }
+  void  setPositionY(float py) { position[1] = py;   }
 
   float getVelocityX() const   { return velocity[0]; }
   void  setVelocityX(float vx) { velocity[0] = vx;   }

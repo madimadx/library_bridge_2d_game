@@ -55,6 +55,8 @@ private:
   int worldWidth;
   int worldHeight;
   int elapsedFromDeath;
+  int moveSizeHorz;
+  int moveSizeVert;
   int deathDelay;
   bool death;
 

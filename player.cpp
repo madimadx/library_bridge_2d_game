@@ -10,6 +10,8 @@ Player::Player( const std::string& name) :
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height")),
   elapsedFromDeath(0),
+  moveSizeHorz(Gamedata::getInstance().getXmlInt(name+"/horzJump")),
+  moveSizeVert(Gamedata::getInstance().getXmlInt(name+"/vertJump")),
   deathDelay(Gamedata::getInstance().getXmlInt(name+"/deathDelay")),
   death(false),
   observers()
@@ -21,6 +23,28 @@ void Player::stop() {
   player.setVelocity( Vector2f(0, 0) );
 }
 
+void Player::right() {
+  if ( player.getX() < worldWidth-getScaledWidth() - (moveSizeHorz)) {
+    player.setPositionX(getX() + moveSizeHorz);
+  }
+}
+void Player::left()  {
+  if ( player.getX() > moveSizeHorz) {
+    player.setPositionX(getX() - moveSizeHorz);
+  }
+}
+void Player::up()    {
+  if ( player.getY() > moveSizeVert) {
+    player.setPositionY(getY() - moveSizeVert);
+  }
+}
+void Player::down()  {
+  if ( player.getY() < worldHeight-getScaledHeight() - moveSizeVert) {
+    player.setPositionY(getY() + moveSizeVert);
+  }
+}
+
+/*
 void Player::right() {
   if ( player.getX() < worldWidth-getScaledWidth()) {
     player.setVelocityX(initialVelocity[0]);
@@ -41,6 +65,7 @@ void Player::down()  {
     player.setVelocityY( initialVelocity[1] );
   }
 }
+*/
 
 void Player::deathDraw() const {
   if (elapsedFromDeath % deathDelay > deathDelay/2) {

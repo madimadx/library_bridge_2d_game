@@ -97,6 +97,7 @@ void Engine::drawMenu() const {
 }
 
 void Engine::draw() const {
+  viewport.update();
   bricks.draw();
   world.draw();
   //std::cout << player->getX() << " " <<  player->getY() << std::endl;
@@ -124,7 +125,7 @@ void Engine::draw() const {
 
   clouds.draw();
 
-  if (player->isDeathOn()) IoMod::getInstance().writeText("Press any key to reset", 240, 400);
+  if (player->isDeathOn()) IoMod::getInstance().writeText("Press R to reset", 240, 400);
   IoMod::getInstance().writeText("Press m to change strategy", 30, 30);
   IoMod::getInstance().writeText("Active: " + strAct, 30, 140);
   IoMod::getInstance().writeText("Inactive: " + strInact, 30, 170);
@@ -167,8 +168,7 @@ void Engine::update(Uint32 ticks) {
       resetDelay();
       collision = false;
   }
-  bricks.update();
-  world.update();
+  player->update(ticks);
 
   for (ShootingSprite* shooter: shooters) {
     shooter->update(ticks);
@@ -179,8 +179,10 @@ void Engine::update(Uint32 ticks) {
   for ( Drawable* smartie : smarties ) {
     smartie->update( ticks );
   }
-  player->update(ticks);
+
   theHud->update(viewport.getX(), viewport.getY());
+  bricks.update();
+  world.update();
   clouds.update();
   //std::cout << clouds.getX() << " " <<  clouds.getY() << std::endl;
   //viewport.drawFPS(clock.getFps());
@@ -282,6 +284,18 @@ bool Engine::play() {
           std::cout << "Terminating frame capture" << std::endl;
           makeVideo = false;
         }
+        if (keystate[indexL]) {
+          static_cast<Player*>(player)->left();
+        }
+        if (keystate[indexR]) {
+          static_cast<Player*>(player)->right();
+        }
+        if (keystate[indexUp]) {
+          static_cast<Player*>(player)->up();
+        }
+        if (keystate[indexDown]) {
+          static_cast<Player*>(player)->down();
+        }
       }
     }
 
@@ -290,20 +304,9 @@ bool Engine::play() {
     if ( ticks > 0 ) {
       delayCount++;
       clock.incrFrame();
-      if (keystate[indexL]) {
-        static_cast<Player*>(player)->left();
-      }
-      if (keystate[indexR]) {
-        static_cast<Player*>(player)->right();
-      }
-      if (keystate[indexUp]) {
-        static_cast<Player*>(player)->up();
-      }
-      if (keystate[indexDown]) {
-        static_cast<Player*>(player)->down();
-      }
       draw();
       update(ticks);
+      //draw();
       if ( makeVideo ) {
         frameGen.makeFrame();
       }

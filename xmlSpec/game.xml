@@ -125,8 +125,10 @@
   <imageWidth>45</imageWidth>
   <imageHeight>61</imageHeight>
   <frameInterval>400</frameInterval>
-  <speedX>130</speedX>
-  <speedY>200</speedY>
+  <horzJump>50</horzJump>
+  <vertJump>50</vertJump>
+  <speedX>0</speedX>
+  <speedY>0</speedY>
   <transparency>true</transparency>
 </Student>
 
